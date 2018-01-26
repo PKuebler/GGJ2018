@@ -17,10 +17,10 @@ public class Building : MonoBehaviour {
 	// if auto fährt, vor ende
 
 	// config
-	private float connectionDuration = 30.f; // Anschluss Arbeitsdauer
-	private float errorDuration = 30.f; // Fehlerbehebung Arbeitsdauer
-	private float connectionMaxWaitingTime = 60.f; // Maximale Wartezeit auf Techniker
-	private float errorMaxWaitingTime = 30.f; // Maximale Wartezeit auf Techniker
+	private float connectionDuration = 30.0f; // Anschluss Arbeitsdauer
+	private float errorDuration = 30.0f; // Fehlerbehebung Arbeitsdauer
+	private float connectionMaxWaitingTime = 60.0f; // Maximale Wartezeit auf Techniker
+	private float errorMaxWaitingTime = 30.0f; // Maximale Wartezeit auf Techniker
 
 	// state
 	private GameObject icon;
