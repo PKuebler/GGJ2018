@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Building : MonoBehaviour {
 	public bool isWaiting = false;
+	public int player = -1; // if -1 -> no client
 
 	// Use this for initialization
 	void Start () {
@@ -15,8 +16,16 @@ public class Building : MonoBehaviour {
 
 	}
 
-	public void SetWait (string name) {
-		print (name);
+	public void SetAction () {
+		print (gameObject.name);
+
+		if (isWaiting != true) {
+			GameObject cylinder = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+			cylinder.name = "Icon Waiting!";
+			cylinder.transform.parent = gameObject.transform;
+			cylinder.transform.position = gameObject.transform.position - new Vector3(0, - (gameObject.transform.localScale.y * 2), 0);
+			cylinder.transform.localScale = new Vector3 (0.5f, 0.5f, 0.5f);
+		}
 		isWaiting = true;
 	}
 }
