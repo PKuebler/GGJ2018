@@ -38,6 +38,7 @@ public class Building : MonoBehaviour {
 		if (currentStatus != Status.Nothing && currentStatus != Status.Connection) {
 			statusTimer -= Time.deltaTime;
 
+			// timer abgelaufen
 			if (statusTimer < 0) {
 				if (currentStatus == Status.ConnectionWait) {
 					// wurde nicht angeschlossen
@@ -45,13 +46,19 @@ public class Building : MonoBehaviour {
 				} else if (currentStatus == Status.ConnectionProgress) {
 					// fertig angeschlossen
 					currentStatus = Status.Connection;
+					currentCar.GetComponent<CarTargetSelect> ().EventFinished ();
 				} else if (currentStatus == Status.ErrorWait) {
 					// fehler wurde nicht behoben
 					currentStatus = Status.Nothing;
 				} else if (currentStatus == Status.ErrorProgress) {
 					// fehler wurde behoben
 					currentStatus = Status.Connection;
+					currentCar.GetComponent<CarTargetSelect> ().EventFinished ();
 				}
+				// clear current car
+				currentCar = null;
+				statusTimer = 0;
+
 				updateIcon ();
 			}
 		}
@@ -90,9 +97,11 @@ public class Building : MonoBehaviour {
         //- wenn nein: weiterfahren
         if (other.CompareTag("Auto"))
         {
-			Transform target = other.GetComponent<AICharacterControl> ().Target;
+			Transform target = other.gameObject.GetComponent<AICharacterControl> ().Target;
+			print (target);
 			// Dieses Gebäude Ziel?
-			if (target && target == transform) {
+			if (target && target == transform && currentCar != other.gameObject) {
+				print ("WORK WORK WORK");
 				// Überhaupt bedarf?
 				bool isCarWorking = false;
 
