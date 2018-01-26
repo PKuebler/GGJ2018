@@ -96,10 +96,8 @@ public class Building : MonoBehaviour {
         if (other.CompareTag("Auto"))
         {
 			Transform target = other.gameObject.GetComponent<AICharacterControl> ().Target;
-			print ("enter " + ((target) ? target.name : "null") + " - " + transform.name + " # " + ((currentCar) ? currentCar.name : "null") + " " +other.gameObject.name);
 			// Dieses Gebäude Ziel?
 			if (target && target == transform && currentCar == null) {
-				print ("WORK WORK WORK");
 				// Überhaupt bedarf?
 				bool isCarWorking = false;
 
@@ -122,13 +120,11 @@ public class Building : MonoBehaviour {
 	void OnTriggerExit(Collider other)
 	{
 		if (other.CompareTag ("Auto") && other.gameObject == currentCar) {
-			print ("byebye " + currentStatus);
 			if (currentStatus == Status.ConnectionProgress) {
 				currentStatus = Status.ConnectionWait;
 			} else if (currentStatus == Status.ErrorProgress) {
 				currentStatus = Status.ErrorWait;
 			}
-			print ("byebye new " + currentStatus);
 			currentCar = null;
 		}
 	}
