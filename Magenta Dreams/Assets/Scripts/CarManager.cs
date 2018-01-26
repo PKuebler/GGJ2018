@@ -11,10 +11,7 @@ public class CarManager : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-
-
-
-        //        aicc = GameObject.FindGameObjectWithTag("Auto").GetComponent<AICharacterControl>();	
+	
     }
 
     // Update is called once per frame
@@ -22,8 +19,6 @@ public class CarManager : MonoBehaviour {
     {
         //1. Nicht selektiert: wenn Auto: selected = Auto
         //2. Auto selektiert: a) wenn Haus: Ziel / b) wenn neues Auto: neues Auto = selected / c) wenn nichts: selected = nichts
-
-
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

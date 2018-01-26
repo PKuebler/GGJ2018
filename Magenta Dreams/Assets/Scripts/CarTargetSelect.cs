@@ -9,6 +9,14 @@ public class CarTargetSelect : MonoBehaviour {
 
 	public void ReachedTarget(GameObject triggerObj, bool isWorking)
     {
-        
+        if (isWorking)
+        {
+            GetComponent<AICharacterControl>().Target = null;
+        }
+    }
+
+    public void EventFinished()
+    {
+
     }
 }
