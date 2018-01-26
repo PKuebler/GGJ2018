@@ -7,7 +7,7 @@ public class CarTargetSelect : MonoBehaviour {
 
 
 
-    public void ReachedTarget(GameObject triggerObj)
+	public void ReachedTarget(GameObject triggerObj, bool isWorking)
     {
         
     }
