@@ -53,6 +53,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\AICharacterControl.cs" />
      <Compile Include="Assets\Scripts\Building.cs" />
+     <Compile Include="Assets\Scripts\CarManager.cs" />
      <Compile Include="Assets\Scripts\CarTargetSelect.cs" />
      <Compile Include="Assets\Scripts\ThirdPersonCharacter.cs" />
      <Compile Include="Assets\Scripts\ThirdPersonUserControl.cs" />
