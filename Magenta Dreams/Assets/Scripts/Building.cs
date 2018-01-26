@@ -14,8 +14,19 @@ public class Building : MonoBehaviour {
 		ErrorProgress // Fehler, Techniker sitzt an behebung.
 	}
 
+	// if auto fährt, vor ende
+
+	// config
+	private float connectionDuration = 30.f; // Anschluss Arbeitsdauer
+	private float errorDuration = 30.f; // Fehlerbehebung Arbeitsdauer
+	private float connectionMaxWaitingTime = 60.f; // Maximale Wartezeit auf Techniker
+	private float errorMaxWaitingTime = 30.f; // Maximale Wartezeit auf Techniker
+
+	// state
 	private GameObject icon;
 	public Status currentStatus = Status.Nothing;
+	public float statusTimer = 0; // aktuelle Dauer
+	public GameObject currentCar;
 
 	// Use this for initialization
 	void Start () {
@@ -24,7 +35,26 @@ public class Building : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if (currentStatus != Status.Nothing && currentStatus != Status.Connection) {
+			statusTimer -= Time.deltaTime;
 
+			if (statusTimer < 0) {
+				if (currentStatus == Status.ConnectionWait) {
+					// wurde nicht angeschlossen
+					currentStatus = Status.Nothing;
+				} else if (currentStatus == Status.ConnectionProgress) {
+					// fertig angeschlossen
+					currentStatus = Status.Connection;
+				} else if (currentStatus == Status.ErrorWait) {
+					// fehler wurde nicht behoben
+					currentStatus = Status.Nothing;
+				} else if (currentStatus == Status.ErrorProgress) {
+					// fehler wurde behoben
+					currentStatus = Status.Connection;
+				}
+				updateIcon ();
+			}
+		}
 	}
 
 	// Timer triggert diese Aktion
@@ -32,8 +62,10 @@ public class Building : MonoBehaviour {
 	public void SetAction() {
 		if (currentStatus == Status.Nothing) {
 			currentStatus = Status.ConnectionWait;
+			statusTimer = connectionMaxWaitingTime;
 		} else if (currentStatus == Status.Connection) {
 			currentStatus = Status.ErrorWait;
+			statusTimer = errorMaxWaitingTime;
 		}
 		updateIcon ();
 	}
@@ -66,13 +98,29 @@ public class Building : MonoBehaviour {
 
 				if (currentStatus == Status.ConnectionWait) {
 					currentStatus = Status.ConnectionProgress;
+					statusTimer = connectionDuration;
 					isCarWorking = true;
+					currentCar = other.gameObject;
 				} else if (currentStatus == Status.ErrorWait) {
 					currentStatus = Status.ErrorProgress;
+					statusTimer = errorDuration;
 					isCarWorking = true;
+					currentCar = other.gameObject;
 				}
 				other.gameObject.GetComponent<CarTargetSelect>().ReachedTarget(this.gameObject, isCarWorking);
 			}
         }
     }
+
+	void OnTriggerExit(Collider other)
+	{
+		if (other.CompareTag ("Auto") && other.gameObject == currentCar) {
+			if (currentStatus == Status.ConnectionProgress) {
+				currentStatus = Status.ConnectionWait;
+			} else if (currentStatus == Status.ErrorProgress) {
+				currentStatus = Status.ErrorWait;
+			}
+			currentCar = null;
+		}
+	}
 }
