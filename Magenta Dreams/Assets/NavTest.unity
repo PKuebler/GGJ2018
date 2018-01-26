@@ -1153,6 +1153,11 @@ Prefab:
       propertyPath: m_Name
       value: Haus (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 65405709083044448, guid: b89c23a49f37010439286ac19540dc91,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b89c23a49f37010439286ac19540dc91, type: 2}
   m_IsPrefabParent: 0

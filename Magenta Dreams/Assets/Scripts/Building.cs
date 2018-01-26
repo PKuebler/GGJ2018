@@ -28,4 +28,16 @@ public class Building : MonoBehaviour {
 		}
 		isWaiting = true;
 	}
+
+    void OnTriggerEnter(Collider other)
+    {
+        //Auto: Fahrt stoppen wenn zielobjekt erreicht
+        //dort wird verglichen, ob es der Trigger vom Ziel des Autos war
+        //- wenn ja: Stoppen
+        //- wenn nein: weiterfahren
+        if (other.CompareTag("Auto"))
+        {
+            other.gameObject.GetComponent<CarTargetSelect>().ReachedTarget(this.gameObject);
+        }
+    }
 }

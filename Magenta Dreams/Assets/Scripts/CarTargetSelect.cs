@@ -76,4 +76,9 @@ public class CarTargetSelect : MonoBehaviour {
             }
         }
     }
+
+    public void ReachedTarget(GameObject triggerObj)
+    {
+        Debug.Log("Haus erreicht");
+    }
 }
