@@ -14,8 +14,6 @@ public class Building : MonoBehaviour {
 		ErrorProgress // Fehler, Techniker sitzt an behebung.
 	}
 
-	// if auto fährt, vor ende
-
 	// config
 	private float connectionDuration = 30.0f; // Anschluss Arbeitsdauer
 	private float errorDuration = 30.0f; // Fehlerbehebung Arbeitsdauer
@@ -98,9 +96,9 @@ public class Building : MonoBehaviour {
         if (other.CompareTag("Auto"))
         {
 			Transform target = other.gameObject.GetComponent<AICharacterControl> ().Target;
-			print (target);
+			print ("enter " + ((target) ? target.name : "null") + " - " + transform.name + " # " + ((currentCar) ? currentCar.name : "null") + " " +other.gameObject.name);
 			// Dieses Gebäude Ziel?
-			if (target && target == transform && currentCar != other.gameObject) {
+			if (target && target == transform && currentCar == null) {
 				print ("WORK WORK WORK");
 				// Überhaupt bedarf?
 				bool isCarWorking = false;
@@ -124,12 +122,25 @@ public class Building : MonoBehaviour {
 	void OnTriggerExit(Collider other)
 	{
 		if (other.CompareTag ("Auto") && other.gameObject == currentCar) {
+			print ("byebye " + currentStatus);
 			if (currentStatus == Status.ConnectionProgress) {
 				currentStatus = Status.ConnectionWait;
 			} else if (currentStatus == Status.ErrorProgress) {
 				currentStatus = Status.ErrorWait;
 			}
+			print ("byebye new " + currentStatus);
 			currentCar = null;
+		}
+	}
+
+	private void OnGUI()
+	{
+		if (currentStatus != Status.Nothing) {
+			if (currentCar != null) {
+				GUI.Label(new Rect(300, 0, 150, 50), "Aktives Objekt: " + currentCar.name);
+			}
+			GUI.Label(new Rect(300, 50, 150, 50), "Status: " + currentStatus);
+			GUI.Label(new Rect(300, 100, 150, 50), "Status Timer: " + statusTimer.ToString());
 		}
 	}
 }
