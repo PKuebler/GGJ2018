@@ -16,8 +16,8 @@ public class Timer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		childs = GameObject.FindGameObjectsWithTag ("Haus");
-//		player_hqs = GameObject.FindGameObjectsWithTag ("HQ");
-//		ai_hqs = GameObject.FindGameObjectsWithTag ("AIHQ");
+		player_hq = GameObject.FindGameObjectWithTag ("HQ").GetComponent<HQ>();
+		ai_hq = GameObject.FindGameObjectWithTag ("AIHQ").GetComponent<HQ>();
 
 		// set start timer
 		timeLeft = timeBetweenEvents;
