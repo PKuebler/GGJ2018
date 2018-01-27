@@ -12,6 +12,7 @@ public class HQ : MonoBehaviour
 
 	public int cars;
 
+	private int difficultAI = 2;
 	private int numbersOfCars = 1;
 	private int contractPay;
     [SerializeField]
@@ -53,11 +54,11 @@ public class HQ : MonoBehaviour
 
     public void AIBuyCars()
     {
-		if ((numbersOfCars * (carPrice * 2)) <= money) 
+		if ((numbersOfCars * (carPrice * difficultAI)) <= money) 
 		{
 			Vector3 postition = new Vector3(this.transform.position.x + (1.0f), this.transform.position.y, this.transform.position.z);
 			GameObject newCar = Instantiate(carPrefab, postition, rotation, this.transform);
-			money = money - (carPrice * (GetComponent<AIManager> ().CarList.Count * 2));
+			money = money - (carPrice * (GetComponent<AIManager> ().CarList.Count * difficultAI));
 			GetComponent<AIManager>().AddCar(newCar);
 		}
     }
