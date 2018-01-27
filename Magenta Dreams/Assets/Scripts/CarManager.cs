@@ -27,7 +27,6 @@ public class CarManager : MonoBehaviour {
             if (Physics.Raycast(ray, out hit))
             {
                 //1. Fall: Nichts selektiert
-                Debug.Log(selectedObject);
                 if (selectedObject == null)
                 {
                     if (hit.transform.tag == "Auto")

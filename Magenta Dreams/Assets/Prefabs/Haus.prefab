@@ -23,8 +23,8 @@ GameObject:
   - component: {fileID: 65405709083044448}
   - component: {fileID: 23320051700711582}
   - component: {fileID: 114979971088098042}
-  - component: {fileID: 135635105934729634}
-  m_Layer: 0
+  - component: {fileID: 65846706878206896}
+  m_Layer: 9
   m_Name: Haus
   m_TagString: Haus
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1465705011995718}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: -1}
+  m_LocalPosition: {x: 0, y: 0.5, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -97,6 +97,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65846706878206896
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1465705011995718}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 1, z: 2}
+  m_Center: {x: 0, y: -0.5, z: 0}
 --- !u!114 &114979971088098042
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -108,17 +120,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c32be8d3b9c54ba9a87ea0afa30da6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isWaiting: 0
-  player: -1
---- !u!135 &135635105934729634
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1465705011995718}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.2
-  m_Center: {x: 0, y: 0, z: 0}
+  currentStatus: 0
+  statusTimer: 0
+  currentCar: {fileID: 0}
