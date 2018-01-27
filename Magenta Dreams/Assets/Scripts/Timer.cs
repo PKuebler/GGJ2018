@@ -6,7 +6,7 @@ public class Timer : MonoBehaviour {
 	public GameObject rootBuildings;
 	private Transform[] childs;
 	public float timeLeft = 30.0f;
-	public float timeBetweenEvents = 30.0f;
+	private float timeBetweenEvents = 10.0f;
 
 	// Use this for initialization
 	void Start () {
