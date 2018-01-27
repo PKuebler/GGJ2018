@@ -31,9 +31,6 @@ public class CarTargetSelect : MonoBehaviour {
             //braucht mich das haus noch?
             if (other.CompareTag("Haus"))
             {
-<<<<<<< HEAD
-               // GetComponent<AICharacterControl>().Target.GetComponent<Building>().OnArrived();
-=======
                 bool stay = other.GetComponent<Building>().CheckIn(this.gameObject);
                 if (stay)
                 {
@@ -50,7 +47,6 @@ public class CarTargetSelect : MonoBehaviour {
             else if (other.CompareTag("HQ") || other.CompareTag("AIHQ"))
             {
                 GetComponent<AICharacterControl>().Target = null;
->>>>>>> a4094191ee7de80ee0ae4589bd73f2da98d13483
             }
         }
     }
