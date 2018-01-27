@@ -7,15 +7,11 @@ using UnityEngine.AI;
 public class CarTargetSelect : MonoBehaviour {
 
     private Transform hq;
-	public Transform target;
     public ParticleSystem part;
     public bool isPlayerCar;
 
-    public NavMeshAgent agent;
+    public bool Working { get; set; }
 
-    public bool Working { get; private set; }
-
-    private float distance;
 
     void Start ()
     {
@@ -23,40 +19,32 @@ public class CarTargetSelect : MonoBehaviour {
             hq = GameObject.FindGameObjectWithTag("HQ").GetComponent<Transform>();
         else
             hq = GameObject.FindGameObjectWithTag("AIHQ").GetComponent<Transform>();
-        agent = GetComponent<NavMeshAgent>();
-
         Working = false;
     }
 
-    void Update()
+    void OnTriggerEnter(Collider other)
     {
-        if (GetComponent<AICharacterControl>().Target != null)
+        //ist das haus mein ziel?
+        if (other.transform == GetComponent<AICharacterControl>().Target)
         {
-            distance = Vector3.Distance(this.transform.position, GetComponent<AICharacterControl>().Target.transform.position);
-            if (distance < 2.8f)
+            //braucht mich das haus noch?
+            bool stay = other.GetComponent<Building>().CheckIn(this.gameObject);
+            if (stay)
             {
-                GetComponent<AICharacterControl>().Target.GetComponent<Building>().OnArrived();
+                Working = true;
+                GetComponent<AICharacterControl>().Target = null;
+            }
+            else
+            {
+                GetComponent<AICharacterControl>().Target = hq;
+                Working = false;
             }
         }
     }
 
-	public void ReachedTarget(GameObject triggerObj, bool isWorking)
+    public void EventComplete ()
     {
-        if (isWorking)
-        {
-            GetComponent<AICharacterControl>().Target = null;
-            Working = true;
-        }
-        else if (!isWorking)
-        {
-            Debug.Log("reached target - false");
-            GetComponent<AICharacterControl>().Target = hq;
-            Working = false;
-        }
-    }
-
-    public void EventFinished()
-    {
-
+        GetComponent<AICharacterControl>().Target = hq;
+        Working = false;
     }
 }
