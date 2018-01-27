@@ -78,13 +78,11 @@ public class AIManager : MonoBehaviour {
         foreach (GameObject eventBuilding in eventBuildings)
         {
             float temp = Vector3.Distance(eventBuilding.transform.position, car.transform.position);
-            Debug.Log(temp.ToString());
             distanceArray[i] = temp;
             builds[i] = eventBuilding;
             i++;
         }
         int shortestIndex = MinValue(distanceArray);
-        Debug.Log(shortestIndex.ToString() + " index");
         return builds[shortestIndex];
     }
 
