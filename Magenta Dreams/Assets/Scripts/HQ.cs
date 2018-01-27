@@ -11,8 +11,11 @@ public class HQ : MonoBehaviour
 	public bool isPlayer; 
 
 	private int contractPay;
-	public int money;
+    [SerializeField]
+	private int money;
+    public int Money { get { return money; } }
 	private int carPrice;
+    public int CarPrice { get { return carPrice; } }
 	private GameObject[] carArray;
 	public List<GameObject> carList;
 	private Quaternion rotation;
@@ -51,6 +54,14 @@ public class HQ : MonoBehaviour
 			}
 		}
 	}
+
+    public void AIBuyCars()
+    {
+        Vector3 postition = new Vector3(this.transform.position.x + (1.0f), this.transform.position.y, this.transform.position.z);
+        GameObject newCar = Instantiate(carPrefab, postition, rotation, this.transform);
+        GetComponent<AIManager>().AddCar(newCar);
+        money = money - carPrice;
+    }
 
 	void OnGUI ()
 	{
