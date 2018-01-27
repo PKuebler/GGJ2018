@@ -21,5 +21,8 @@ public class LevelScriptEditor : Editor
 
 		EditorGUILayout.LabelField("Timer", myTarget.statusTimer.ToString() + "s");
 		EditorGUILayout.LabelField("Current Car", (myTarget.currentCar) ? myTarget.currentCar.name : "No Car");
+		EditorGUILayout.LabelField("Collected Money");
+		EditorGUILayout.LabelField("Player", myTarget.moneyPlayer.ToString());
+		EditorGUILayout.LabelField("AI", myTarget.moneyAI.ToString());
 	}
 }

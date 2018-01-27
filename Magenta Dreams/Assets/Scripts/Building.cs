@@ -37,6 +37,10 @@ public class Building : MonoBehaviour {
 	public GameObject currentCar;
 	public bool isDebug = false; // log debug
 
+	// collect money
+	public float moneyAI = 0;
+	public float moneyPlayer = 0;
+
 	// Use this for initialization
 	void Start () {
 		UpdateUI ();
@@ -124,6 +128,15 @@ public class Building : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		// geld
+		if (currentStatus == Status.Connection) {
+			if (owner == Owner.AI) {
+				moneyAI += Time.deltaTime;
+			} else if (owner == Owner.Player) {
+				moneyPlayer += Time.deltaTime;
+			}
+		}
+
 		// wartet auf nix?
 		if (currentStatus == Status.Nothing || currentStatus == Status.Connection) {
 			return;
