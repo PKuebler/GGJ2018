@@ -23,6 +23,8 @@ ModelImporter:
     100030: HQ_A
     100032: HQ_B
     100034: Tree_002
+    100036: HQ_B_001
+    100038: Text_001
     400000: Building_A
     400002: Building_B
     400004: Cube
@@ -41,6 +43,8 @@ ModelImporter:
     400030: HQ_A
     400032: HQ_B
     400034: Tree_002
+    400036: HQ_B_001
+    400038: Text_001
     2100000: unnamed
     2100002: Building_brown
     2100004: Building_dark_green
@@ -72,6 +76,8 @@ ModelImporter:
     2300028: HQ_A
     2300030: HQ_B
     2300032: Tree_002
+    2300034: HQ_B_001
+    2300036: Text_001
     3300000: Building_A
     3300002: Building_B
     3300004: Cube
@@ -89,6 +95,8 @@ ModelImporter:
     3300028: HQ_A
     3300030: HQ_B
     3300032: Tree_002
+    3300034: HQ_B_001
+    3300036: Text_001
     4300000: Cube
     4300002: Text
     4300004: Tree_001
@@ -106,6 +114,8 @@ ModelImporter:
     4300028: HQ_A
     4300030: Tree_002
     4300032: HQ_B
+    4300034: HQ_B_001
+    4300036: Text_001
     7400000: Default Take
     9500000: //RootNode
   externalObjects: {}
