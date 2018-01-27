@@ -31,7 +31,7 @@ GameObject:
   - component: {fileID: 195097599188975740}
   - component: {fileID: 114629416206538790}
   m_Layer: 8
-  m_Name: Auto
+  m_Name: KIAuto
   m_TagString: Auto
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
