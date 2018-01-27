@@ -37,8 +37,21 @@ public class Timer : MonoBehaviour {
 		moneyTimeLeft -= Time.deltaTime;
 		if (moneyTimeLeft < 0) 
 		{
-			player_hq.GetMoney ();
-			//ai_hq.GetMoney ();
+			float moneyAI = 0;
+			float moneyPlayer = 0;
+
+			foreach (GameObject obj in childs) {
+				Building building = obj.GetComponent<Building> ();
+
+				moneyAI += building.moneyAI;
+				moneyPlayer += building.moneyPlayer;
+
+				building.moneyAI = 0;
+				building.moneyPlayer = 0;
+			}
+
+			player_hq.SetMoney (moneyPlayer);
+			ai_hq.SetMoney (moneyPlayer);
 			moneyTimeLeft = timeBetweenMoney;
 		}
 	}

@@ -11,11 +11,10 @@ public class HQ : MonoBehaviour
 	public bool isPlayer; 
 
 	private int contractPay;
-	private int money;
+	public int money;
 	private int carPrice;
 	private GameObject[] carArray;
 	private List<GameObject> carList;
-	private List<Building> buildingList;
 	private Quaternion rotation;
 
 	// Use this for initialization
@@ -57,35 +56,11 @@ public class HQ : MonoBehaviour
 	{
 		GUI.Label (new Rect (0, 100, 200, 50), "Funds: " + money.ToString () + "\nCars: " + carList.Count.ToString() );
 	}
-
-	public void AddBuilding(Building newBuilding)
-	{
-		buildingList.Add (newBuilding);
-	}
-
-	public void RemoveBuilding(Building removeBuilding)
-	{
-
-		foreach(Building building in buildingList)
-		{
-			if (GameObject.ReferenceEquals(removeBuilding, building))
-			{
-				buildingList.Remove (removeBuilding);
-			}
-		}
-	}
 		
-	public void GetMoney()
+	public void SetMoney(float newMoney)
 	{
-		foreach(Building building in buildingList)
-		{
-			if (building.currentStatus == Building.Status.Connection)
-			{
-					money = money + contractPay;
-			}
-		}
+		money += Mathf.RoundToInt(newMoney);
 	}
-
 		
 	#region Erstellen der HQ Werte und erstes Auto
 	void InitStats()
@@ -96,9 +71,6 @@ public class HQ : MonoBehaviour
 		contractPay = 5;
 
 		rotation = new Quaternion (0, 0, 0, 0);
-
-		// Liste für Gebäude zu HQ
-		buildingList = new List<Building> ();
 
 		// Setzen der Autos die bei Spielstart zum HQ gehören
 		carList = new List<GameObject>();
