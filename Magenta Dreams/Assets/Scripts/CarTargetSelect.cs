@@ -15,6 +15,7 @@ public class CarTargetSelect : MonoBehaviour {
 
     public bool Working { get; private set; }
 
+    private float distance;
 
     void Start ()
     {
@@ -27,6 +28,18 @@ public class CarTargetSelect : MonoBehaviour {
         Working = false;
     }
 
+    void Update()
+    {
+        if (GetComponent<AICharacterControl>().Target != null)
+        {
+            distance = Vector3.Distance(this.transform.position, GetComponent<AICharacterControl>().Target.transform.position);
+            if (distance < 2.8f)
+            {
+                GetComponent<AICharacterControl>().Target.GetComponent<Building>().OnArrived();
+            }
+        }
+    }
+
 	public void ReachedTarget(GameObject triggerObj, bool isWorking)
     {
         if (isWorking)
@@ -36,6 +49,7 @@ public class CarTargetSelect : MonoBehaviour {
         }
         else if (!isWorking)
         {
+            Debug.Log("reached target - false");
             GetComponent<AICharacterControl>().Target = hq;
             Working = false;
         }

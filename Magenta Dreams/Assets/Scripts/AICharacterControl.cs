@@ -9,6 +9,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
     {
         public UnityEngine.AI.NavMeshAgent agent { get; private set; }             // the navmesh agent required for the path finding
         public ThirdPersonCharacter character { get; private set; } // the character we are controlling
+        [SerializeField]
         private Transform target;                               // target to aim for
 
         public Transform Target
