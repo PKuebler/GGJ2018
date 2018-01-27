@@ -32,7 +32,7 @@ GameObject:
   - component: {fileID: 114629416206538790}
   m_Layer: 8
   m_Name: AIAuto
-  m_TagString: Auto
+  m_TagString: AIAuto
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -188,6 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  part: {fileID: 0}
 --- !u!136 &136540564876264660
 CapsuleCollider:
   m_ObjectHideFlags: 1
