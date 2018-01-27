@@ -1,0 +1,190 @@
+fileFormatVersion: 2
+guid: 65aaa97f8ef574c1eab1d9079ec0bb8f
+timeCreated: 1517071162
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Building_A
+    100002: Building_B
+    100004: Cube
+    100006: Ground
+    100008: //RootNode
+    100010: Strret
+    100012: SunBench
+    100014: SunBench_001
+    100016: SunBench_002
+    100018: SunBench_003
+    100020: SunBench_004
+    100022: Text
+    100024: Tree
+    100026: Tree_001
+    100028: Umbrella
+    100030: HQ_A
+    100032: HQ_B
+    100034: Tree_002
+    400000: Building_A
+    400002: Building_B
+    400004: Cube
+    400006: Ground
+    400008: //RootNode
+    400010: Strret
+    400012: SunBench
+    400014: SunBench_001
+    400016: SunBench_002
+    400018: SunBench_003
+    400020: SunBench_004
+    400022: Text
+    400024: Tree
+    400026: Tree_001
+    400028: Umbrella
+    400030: HQ_A
+    400032: HQ_B
+    400034: Tree_002
+    2100000: unnamed
+    2100002: Building_brown
+    2100004: Building_dark_green
+    2100006: Building_White
+    2100008: Building_gray
+    2100010: Building_yellow
+    2100012: Building_red
+    2100014: Glass
+    2100016: Building_green
+    2100018: Building_BLue
+    2100020: Umbrella_white
+    2100022: Umbrella_red
+    2100024: white_Stripes
+    2100026: Street
+    2300000: Building_A
+    2300002: Building_B
+    2300004: Cube
+    2300006: Ground
+    2300008: Strret
+    2300010: SunBench
+    2300012: SunBench_001
+    2300014: SunBench_002
+    2300016: SunBench_003
+    2300018: SunBench_004
+    2300020: Text
+    2300022: Tree
+    2300024: Tree_001
+    2300026: Umbrella
+    2300028: HQ_A
+    2300030: HQ_B
+    2300032: Tree_002
+    3300000: Building_A
+    3300002: Building_B
+    3300004: Cube
+    3300006: Ground
+    3300008: Strret
+    3300010: SunBench
+    3300012: SunBench_001
+    3300014: SunBench_002
+    3300016: SunBench_003
+    3300018: SunBench_004
+    3300020: Text
+    3300022: Tree
+    3300024: Tree_001
+    3300026: Umbrella
+    3300028: HQ_A
+    3300030: HQ_B
+    3300032: Tree_002
+    4300000: Cube
+    4300002: Text
+    4300004: Tree_001
+    4300006: Building_B
+    4300008: Tree
+    4300010: SunBench_004
+    4300012: SunBench_003
+    4300014: Building_A
+    4300016: SunBench_002
+    4300018: SunBench_001
+    4300020: SunBench
+    4300022: Umbrella
+    4300024: Ground
+    4300026: Strret
+    4300028: HQ_A
+    4300030: Tree_002
+    4300032: HQ_B
+    7400000: Default Take
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
