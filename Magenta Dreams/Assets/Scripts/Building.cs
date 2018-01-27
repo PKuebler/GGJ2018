@@ -14,8 +14,6 @@ public class Building : MonoBehaviour {
 		ErrorProgress // Fehler, Techniker sitzt an behebung.
 	}
 
-	// if auto fährt, vor ende
-
 	// config
 	private float connectionDuration = 30.0f; // Anschluss Arbeitsdauer
 	private float errorDuration = 30.0f; // Fehlerbehebung Arbeitsdauer
@@ -30,7 +28,7 @@ public class Building : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+		updateColor ();
 	}
 
 	// Update is called once per frame
@@ -38,6 +36,7 @@ public class Building : MonoBehaviour {
 		if (currentStatus != Status.Nothing && currentStatus != Status.Connection) {
 			statusTimer -= Time.deltaTime;
 
+			// timer abgelaufen
 			if (statusTimer < 0) {
 				if (currentStatus == Status.ConnectionWait) {
 					// wurde nicht angeschlossen
@@ -45,14 +44,21 @@ public class Building : MonoBehaviour {
 				} else if (currentStatus == Status.ConnectionProgress) {
 					// fertig angeschlossen
 					currentStatus = Status.Connection;
+					currentCar.GetComponent<CarTargetSelect> ().EventFinished ();
 				} else if (currentStatus == Status.ErrorWait) {
 					// fehler wurde nicht behoben
 					currentStatus = Status.Nothing;
 				} else if (currentStatus == Status.ErrorProgress) {
 					// fehler wurde behoben
 					currentStatus = Status.Connection;
+					currentCar.GetComponent<CarTargetSelect> ().EventFinished ();
 				}
+				// clear current car
+				currentCar = null;
+				statusTimer = 0;
+
 				updateIcon ();
+				updateColor ();
 			}
 		}
 	}
@@ -68,6 +74,7 @@ public class Building : MonoBehaviour {
 			statusTimer = errorMaxWaitingTime;
 		}
 		updateIcon ();
+		updateColor ();
 	}
 
 	private void updateIcon() {
@@ -77,8 +84,17 @@ public class Building : MonoBehaviour {
 			icon.transform.parent = gameObject.transform;
 			icon.transform.position = gameObject.transform.position - new Vector3 (0, -(gameObject.transform.localScale.y * 2), 0);
 			icon.transform.localScale = new Vector3 (0.5f, 0.5f, 0.5f);
+			icon.GetComponent<Renderer>().material.color = new Color(0,1,0,1);
 		} else if (currentStatus == Status.Nothing || currentStatus == Status.Connection) {
 			Destroy (icon);
+		}
+	}
+
+	private void updateColor() {
+		if (currentStatus == Status.Connection || currentStatus == Status.ErrorProgress || currentStatus == Status.ErrorWait) {
+			gameObject.GetComponent<Renderer> ().material.color = Color.magenta;
+		} else {
+			gameObject.GetComponent<Renderer>().material.color = Color.grey;
 		}
 	}
 
@@ -90,9 +106,9 @@ public class Building : MonoBehaviour {
         //- wenn nein: weiterfahren
         if (other.CompareTag("Auto"))
         {
-			Transform target = other.GetComponent<AICharacterControl> ().Target;
+			Transform target = other.gameObject.GetComponent<AICharacterControl> ().Target;
 			// Dieses Gebäude Ziel?
-			if (target && target == transform) {
+			if (target && target == transform && currentCar == null) {
 				// Überhaupt bedarf?
 				bool isCarWorking = false;
 
@@ -121,6 +137,17 @@ public class Building : MonoBehaviour {
 				currentStatus = Status.ErrorWait;
 			}
 			currentCar = null;
+		}
+	}
+
+	private void OnGUI()
+	{
+		if (currentStatus != Status.Nothing) {
+			if (currentCar != null) {
+				GUI.Label(new Rect(300, 0, 150, 50), "Aktives Objekt: " + currentCar.name);
+			}
+			GUI.Label(new Rect(300, 50, 150, 50), "Status: " + currentStatus);
+			GUI.Label(new Rect(300, 100, 150, 50), "Status Timer: " + statusTimer.ToString());
 		}
 	}
 }
