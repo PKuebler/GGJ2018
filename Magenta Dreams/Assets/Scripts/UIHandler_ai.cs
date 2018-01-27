@@ -20,10 +20,10 @@ public class UIHandler_ai : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		moneyText =  hq_ai.GetComponent<HQ> ().money.ToString();
+		moneyText =  hq_ai.GetComponent<HQ> ().Money.ToString();
 		moneyTextField.text = moneyText;
 
-		carText = hq_ai.GetComponent<HQ> ().cars.ToString ();
+		carText = hq_ai.GetComponent<AIManager> ().CarList.Count.ToString ();
 		carTextField.text = carText;
 	}
 }
