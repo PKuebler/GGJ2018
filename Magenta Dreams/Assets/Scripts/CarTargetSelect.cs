@@ -36,6 +36,7 @@ public class CarTargetSelect : MonoBehaviour {
         }
         else if (!isWorking)
         {
+            Debug.Log("reached target - false");
             GetComponent<AICharacterControl>().Target = hq;
             Working = false;
         }
