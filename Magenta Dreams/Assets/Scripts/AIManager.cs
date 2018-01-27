@@ -4,19 +4,17 @@ using UnityEngine;
 
 public class AIManager : MonoBehaviour {
 
-    private GameObject[] carArray;
+    public GameObject car;
     private List<GameObject> carList;
-    private GameObject[] buildingArray;
-    public List<GameObject> BuildingsWithEvents { get; set; }
+    private List<GameObject> buildingsWithEvents;
 
 	// Use this for initialization
 	void Start () {
-        carArray = GameObject.FindGameObjectsWithTag("KIAuto");
-        foreach (GameObject go in carArray)
-        {
-            carList.Add(go);
-        }
-        buildingArray = GameObject.FindGameObjectsWithTag("Haus");
+        carList = new List<GameObject>();
+        buildingsWithEvents = new List<GameObject>();
+
+        Debug.Log(car);
+        carList.Add(car);
 	}
 	
 	// Update is called once per frame
@@ -26,10 +24,15 @@ public class AIManager : MonoBehaviour {
 
     public void AddEvent (GameObject building)
     {
-
+        buildingsWithEvents.Add(building);
     }
 
     public void RemoveEvent (GameObject building)
+    {
+        buildingsWithEvents.Remove(building);
+    }
+
+    public void AddCar (GameObject car)
     {
 
     }

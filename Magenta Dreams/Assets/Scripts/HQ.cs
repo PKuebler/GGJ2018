@@ -8,6 +8,8 @@ using UnityStandardAssets.Characters.ThirdPerson;
 public class HQ : MonoBehaviour 
 {
 	public GameObject carPrefab;
+	public bool isPlayer; 
+
 	private int contractPay;
 	private int money;
 	private int carPrice;
@@ -19,19 +21,7 @@ public class HQ : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-
 		InitStats ();
-
-		// Test Gebäude für die Einnahmen
-		Building testBuilding0 = new Building ();
-		testBuilding0.currentStatus = Building.Status.Connection;
-		GetBuilding (testBuilding0);
-
-		Building testBuilding1 = new Building ();
-		testBuilding1.currentStatus = Building.Status.Connection;
-		GetBuilding (testBuilding1);
-
-
 	}
 	
 	// Update is called once per frame
@@ -44,7 +34,6 @@ public class HQ : MonoBehaviour
 	public void BuyCars ()
 	{
 		int numbersOfCars = 1;
-		GetMoney ();
 
 		if( (numbersOfCars * carPrice) <= money)
 		{
@@ -52,15 +41,16 @@ public class HQ : MonoBehaviour
 			{
 				Vector3 postition = new Vector3 (this.transform.position.x + (i + 1.0f), this.transform.position.y, this.transform.position.z);
 				GameObject newCar = Instantiate (carPrefab, postition, rotation, this.transform);
-				carList.Add (newCar);
-				money = money - carPrice;
+
+				if (isPlayer != true) {
+					GetComponent<AIManager> ().AddCar (newCar);
+				} else {
+					carList.Add (newCar);
+					money = money - carPrice;
+				}
+
 			}
 		}
-//		else
-//		{
-//			// Throw Masage -> insufficient funds
-//			// DisplayDialog ("Title here", "Your text", "Ok");
-//		}
 	}
 
 	void OnGUI ()
@@ -68,22 +58,32 @@ public class HQ : MonoBehaviour
 		GUI.Label (new Rect (0, 100, 200, 50), "Funds: " + money.ToString () + "\nCars: " + carList.Count.ToString() );
 	}
 
-	public void GetBuilding(Building newBuilding)
+	public void AddBuilding(Building newBuilding)
 	{
 		buildingList.Add (newBuilding);
 	}
 
+	public void RemoveBuilding(Building removeBuilding)
+	{
 
+		foreach(Building building in buildingList)
+		{
+			if (GameObject.ReferenceEquals(removeBuilding, building))
+			{
+				buildingList.Remove (removeBuilding);
+			}
+		}
+	}
+		
 	public void GetMoney()
 	{
 		foreach(Building building in buildingList)
 		{
 			if (building.currentStatus == Building.Status.Connection)
 			{
-				money = money + contractPay;
+					money = money + contractPay;
 			}
 		}
-
 	}
 
 	#region Trigger
@@ -112,7 +112,6 @@ public class HQ : MonoBehaviour
 		}
 	}
 	#endregion 
-
 		
 	#region Erstellen der HQ Werte und erstes Auto
 	void InitStats()
