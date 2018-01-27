@@ -1,17 +1,23 @@
 fileFormatVersion: 2
-guid: 05e8626f62d7249f3b8e010de2a83a11
-timeCreated: 1517044706
-licenseType: Free
+guid: a17e09ba2a54e4e5f82dc48e177c6a33
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Ground
+    100004: Strret
     400000: //RootNode
-    2100000: white_Stripes
-    2100002: Street
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Plane_058
+    400002: Ground
+    400004: Strret
+    2100000: unnamed
+    2100002: white_Stripes
+    2100004: Street
+    2300000: Ground
+    2300002: Strret
+    3300000: Ground
+    3300002: Strret
+    4300000: Ground
+    4300002: Strret
     7400000: Default Take
     9500000: //RootNode
   externalObjects: {}
