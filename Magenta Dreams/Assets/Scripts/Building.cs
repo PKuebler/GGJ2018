@@ -25,10 +25,10 @@ public class Building : MonoBehaviour {
     private AIManager aihq;
 
 	// config
-	private float connectionDuration = 30.0f; // Anschluss Arbeitsdauer
-	private float errorDuration = 30.0f; // Fehlerbehebung Arbeitsdauer
-	private float connectionMaxWaitingTime = 60.0f; // Maximale Wartezeit auf Techniker
-	private float errorMaxWaitingTime = 30.0f; // Maximale Wartezeit auf Techniker
+	private float connectionDuration = 15.0f; // Anschluss Arbeitsdauer
+	private float errorDuration = 15.0f; // Fehlerbehebung Arbeitsdauer
+	private float connectionMaxWaitingTime = 40.0f; // Maximale Wartezeit auf Techniker
+	private float errorMaxWaitingTime = 20.0f; // Maximale Wartezeit auf Techniker
 
 	// state
 	private GameObject icon;
