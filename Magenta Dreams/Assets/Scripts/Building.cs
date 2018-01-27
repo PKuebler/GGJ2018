@@ -14,6 +14,16 @@ public class Building : MonoBehaviour {
 		ErrorProgress // Fehler, Techniker sitzt an behebung.
 	}
 
+    public enum Owner
+    {
+        NoOne,
+        Player,
+        AI
+    }
+    public Owner owner;
+
+    private AIManager aihq;
+
 	// config
 	private float connectionDuration = 30.0f; // Anschluss Arbeitsdauer
 	private float errorDuration = 30.0f; // Fehlerbehebung Arbeitsdauer
@@ -26,9 +36,40 @@ public class Building : MonoBehaviour {
 	public float statusTimer = 0; // aktuelle Dauer
 	public GameObject currentCar;
 
+	// Cars At Building Colider
+	public List<GameObject> TriggerCars = new List<GameObject>();
+
+/*
+//The list of colliders currently inside the trigger
+ var TriggerList : List.<Collider> = new List.<Collider>();
+ 
+ //called when something enters the trigger
+ function OnTriggerEnter(other : Collider)
+ {
+     //if the object is not already in the list
+     if(!TriggerList.Contains(other))
+     {
+         //add the object to the list
+         TriggerList.Add(Other);
+     }
+ }
+ 
+ //called when something exits the trigger
+ function OnTriggerExit(other : Collider)
+ {
+     //if the object is in the list
+     if(TriggerList.Contains(other))
+     {
+         //remove it from the list
+         TriggerList.Remove(Other);
+     }
+ }*/
+
 	// Use this for initialization
 	void Start () {
 		updateColor ();
+        aihq = GameObject.FindGameObjectWithTag("AIHQ").GetComponent<AIManager>();
+        owner = Owner.NoOne;
 	}
 
 	// Update is called once per frame
@@ -40,25 +81,18 @@ public class Building : MonoBehaviour {
 			if (statusTimer < 0) {
 				if (currentStatus == Status.ConnectionWait) {
 					// wurde nicht angeschlossen
-					currentStatus = Status.Nothing;
+					SetStatusNothing ();
 				} else if (currentStatus == Status.ConnectionProgress) {
 					// fertig angeschlossen
-					currentStatus = Status.Connection;
-					currentCar.GetComponent<CarTargetSelect> ().EventFinished ();
+					owner = (currentCar.tag == "Auto")? Owner.Player : Owner.AI;
+					SetStatusConnection();
 				} else if (currentStatus == Status.ErrorWait) {
 					// fehler wurde nicht behoben
-					currentStatus = Status.Nothing;
+					SetStatusNothing();
 				} else if (currentStatus == Status.ErrorProgress) {
 					// fehler wurde behoben
-					currentStatus = Status.Connection;
-					currentCar.GetComponent<CarTargetSelect> ().EventFinished ();
+					SetStatusConnection();
 				}
-				// clear current car
-				currentCar = null;
-				statusTimer = 0;
-
-				updateIcon ();
-				updateColor ();
 			}
 		}
 	}
@@ -67,14 +101,10 @@ public class Building : MonoBehaviour {
 	// Checkt welche Eintritt
 	public void SetAction() {
 		if (currentStatus == Status.Nothing) {
-			currentStatus = Status.ConnectionWait;
-			statusTimer = connectionMaxWaitingTime;
+			SetStatusConnectionWait ();
 		} else if (currentStatus == Status.Connection) {
-			currentStatus = Status.ErrorWait;
-			statusTimer = errorMaxWaitingTime;
+			SetStatusErrorWait ();
 		}
-		updateIcon ();
-		updateColor ();
 	}
 
 	private void updateIcon() {
@@ -92,20 +122,45 @@ public class Building : MonoBehaviour {
 
 	private void updateColor() {
 		if (currentStatus == Status.Connection || currentStatus == Status.ErrorProgress || currentStatus == Status.ErrorWait) {
-			gameObject.GetComponent<Renderer> ().material.color = Color.magenta;
-		} else {
+            if (owner == Owner.Player)
+                gameObject.GetComponent<Renderer>().material.color = Color.magenta;
+            else
+                gameObject.GetComponent<Renderer>().material.color = Color.blue;
+        } else {
 			gameObject.GetComponent<Renderer>().material.color = Color.grey;
 		}
 	}
 
     void OnTriggerEnter(Collider other)
     {
+    	// only cars
+    	if (!other.CompareTag("Auto") && !other.CompareTag("AIAuto")) {
+    		return;
+    	}
+
+    	GameObject car = other.gameObject;
+
+		if (!TriggerCars.Contains(car)) {
+			TriggerCars.Add(car);
+		}
+
         //Auto: Fahrt stoppen wenn zielobjekt erreicht
         //dort wird verglichen, ob es der Trigger vom Ziel des Autos war
         //- wenn ja: Stoppen
         //- wenn nein: weiterfahren
-        if (other.CompareTag("Auto"))
+		if (other.CompareTag("Auto") || other.CompareTag("AIAuto"))
         {
+			// nur eigene gebäude bei error
+			if (currentStatus == Status.ErrorWait) {
+				if (other.CompareTag ("Auto") && owner != Owner.Player) {
+					// ignore event
+					return;
+				} else if (other.CompareTag ("AIAuto") && owner != Owner.AI) {
+					// ignore event
+					return;
+				}
+			}
+
 			// Transform target = other.gameObject.GetComponent<AICharacterControl> ().Target;
 			Transform target = other.gameObject.GetComponent<CarTargetSelect> ().target;
 			// Dieses Gebäude Ziel?
@@ -114,41 +169,124 @@ public class Building : MonoBehaviour {
 				bool isCarWorking = false;
 
 				if (currentStatus == Status.ConnectionWait) {
-					currentStatus = Status.ConnectionProgress;
-					statusTimer = connectionDuration;
+					SetStatusConnectionProgress (other.gameObject);
 					isCarWorking = true;
-					currentCar = other.gameObject;
 				} else if (currentStatus == Status.ErrorWait) {
-					currentStatus = Status.ErrorProgress;
-					statusTimer = errorDuration;
+					SetStatusErrorProgress (other.gameObject);
 					isCarWorking = true;
-					currentCar = other.gameObject;
 				}
-				other.gameObject.GetComponent<CarTargetSelect>().ReachedTarget(this.gameObject, isCarWorking);
+				other.gameObject.GetComponent<CarTargetSelect> ().ReachedTarget (this.gameObject, isCarWorking);
 			}
         }
     }
 
 	void OnTriggerExit(Collider other)
 	{
-		if (other.CompareTag ("Auto") && other.gameObject == currentCar) {
+    	// only cars
+    	if (!other.CompareTag("Auto") && !other.CompareTag("AIAuto")) {
+    		return;
+    	}
+
+    	GameObject car = other.gameObject;
+
+		if (TriggerCars.Contains(car)) {
+			TriggerCars.Remove(car);
+		}
+
+        if ((other.CompareTag ("Auto") || other.CompareTag("AIAuto")) && other.gameObject == currentCar) {
 			if (currentStatus == Status.ConnectionProgress) {
-				currentStatus = Status.ConnectionWait;
+				SetStatusConnectionWait ();
 			} else if (currentStatus == Status.ErrorProgress) {
-				currentStatus = Status.ErrorWait;
+				SetStatusErrorWait ();
 			}
-			currentCar = null;
 		}
 	}
 
-	private void OnGUI()
-	{
-		if (currentStatus != Status.Nothing) {
-			if (currentCar != null) {
-				GUI.Label(new Rect(300, 0, 150, 50), "Aktives Objekt: " + currentCar.name);
-			}
-			GUI.Label(new Rect(300, 50, 150, 50), "Status: " + currentStatus);
-			GUI.Label(new Rect(300, 100, 150, 50), "Status Timer: " + statusTimer.ToString());
+	public void SetStatusToDebug() {
+		if (aihq) {
+			aihq.RemoveEvent(gameObject);
 		}
+		switch (currentStatus) {
+			case Status.Nothing:
+				SetStatusNothing();
+				break;
+			case Status.ConnectionWait:
+				SetStatusConnectionWait();
+				break;
+			case Status.ConnectionProgress:
+				// no car
+				break;
+			case Status.Connection:
+				owner = Owner.Player;
+				SetStatusConnection ();
+				break;
+			case Status.ErrorWait:
+				SetStatusErrorWait ();
+				break;
+			case Status.ErrorProgress:
+				// no car
+				break;
+		}
+	}
+
+	public void SetStatusNothing() {
+		statusTimer = 0;
+		currentCar = null;
+		currentStatus = Status.Nothing;
+
+		UpdateUI ();
+	}
+
+	public void SetStatusConnectionWait() {
+		statusTimer = connectionMaxWaitingTime;
+		currentCar = null;
+		currentStatus = Status.ConnectionWait;
+		if (aihq) {
+			aihq.AddEvent (gameObject);
+		}
+
+		UpdateUI ();
+	}
+
+	public void SetStatusConnectionProgress(GameObject car) {
+		statusTimer = connectionDuration;
+		currentStatus = Status.ConnectionProgress;
+		currentCar = car;
+
+		UpdateUI ();
+	}
+
+	public void SetStatusConnection() {
+		statusTimer = 0;
+		if (currentCar) {
+			currentCar.GetComponent<CarTargetSelect> ().EventFinished ();
+		}
+		currentCar = null;
+		currentStatus = Status.Connection;
+		UpdateUI ();
+	}
+
+	public void SetStatusErrorWait() {
+		statusTimer = errorMaxWaitingTime;
+		currentCar = null;
+		currentStatus = Status.ErrorWait;
+		if (owner == Owner.AI && aihq)
+		{
+			aihq.AddEvent(gameObject);
+		}
+		UpdateUI ();
+	}
+
+	public void SetStatusErrorProgress(GameObject car) {
+		statusTimer = errorDuration;
+		currentStatus = Status.ErrorProgress;
+		currentCar = car;
+
+		UpdateUI ();
+	}
+
+	private void UpdateUI() {
+		updateIcon ();
+		updateColor ();
 	}
 }

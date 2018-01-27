@@ -533,9 +533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee3cc17d6916a4a738d78ed6c28adc2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player_hqs: {fileID: 1370968793}
-  ai_hqs: {fileID: 1694100898}
-  moneyTimeLeft: 40
+  rootBuildings: {fileID: 110282969}
   timeLeft: 30
 --- !u!1001 &837543603
 Prefab:
@@ -941,11 +939,6 @@ Prefab:
       value: 
       objectReference: {fileID: 1581487791173582, guid: 2e8ee8f71a0a1cb46a2ca8f68441071f,
         type: 2}
-    - target: {fileID: 114233755980048726, guid: 7e5b36a47b4c2c44c878e93b5ee9a21d,
-        type: 2}
-      propertyPath: isPlayer
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7e5b36a47b4c2c44c878e93b5ee9a21d, type: 2}
   m_IsPrefabParent: 0
@@ -1432,12 +1425,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4987384495870972, guid: 45eaaf5ee8f072f45957588881c5d1f8,
     type: 2}
   m_PrefabInternal: {fileID: 1694100896}
---- !u!114 &1694100898 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114935074242310826, guid: 45eaaf5ee8f072f45957588881c5d1f8,
-    type: 2}
-  m_PrefabInternal: {fileID: 1694100896}
-  m_Script: {fileID: 11500000, guid: f8ede3d06073a41a284ae8fbc9bb9bf2, type: 3}
 --- !u!1001 &1707931872
 Prefab:
   m_ObjectHideFlags: 0

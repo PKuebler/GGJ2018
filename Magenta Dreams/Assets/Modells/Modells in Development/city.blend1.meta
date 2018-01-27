@@ -1,6 +1,16 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Magenta Dreams/Assets/Modells/Modells in Development/city.blend1.meta
 guid: 659a4e734e0574b2d86fd9a3287d4d4d
 timeCreated: 1517059931
+=======
+<<<<<<< HEAD
+guid: 10e90edefbf4ea7488407b17bc93c4d9
+timeCreated: 1517045841
+=======
+guid: 1b6969e11d17e4bf9825e02932d099f1
+timeCreated: 1517046018
+>>>>>>> cde49a7675081f6825bf54ff13f2bc4fd2344baf
+>>>>>>> 177e364aee4f21c6e6fdfd1f05dd6d6ffad06cee:Magenta Dreams/Assets/Modells/Modells in Development/streets 0.3.blend1.meta
 licenseType: Free
 DefaultImporter:
   externalObjects: {}

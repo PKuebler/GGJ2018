@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Timer : MonoBehaviour {
-	public GameObject rootBuildings;
-	private Transform[] childs;
+	private GameObject[] childs;
+	public HQ player_hq;
+	public HQ ai_hq;
+
+	public float moneyTimeLeft = 40.0f;
+	private float timeBetweenMoney = 20.0f;
+
 	public float timeLeft = 30.0f;
 	private float timeBetweenEvents = 10.0f;
-
+		
 	// Use this for initialization
 	void Start () {
-		childs = rootBuildings.GetComponentsInChildren<Transform>();
+		childs = GameObject.FindGameObjectsWithTag ("Haus");
+//		player_hqs = GameObject.FindGameObjectsWithTag ("HQ");
+//		ai_hqs = GameObject.FindGameObjectsWithTag ("AIHQ");
 
 		// set start timer
 		timeLeft = timeBetweenEvents;
@@ -25,9 +32,20 @@ public class Timer : MonoBehaviour {
 		}
 	}
 
+	void FixedUpdate()
+	{
+		moneyTimeLeft -= Time.deltaTime;
+		if (moneyTimeLeft < 0) 
+		{
+			player_hq.GetMoney ();
+			//ai_hq.GetMoney ();
+			moneyTimeLeft = timeBetweenMoney;
+		}
+	}
+
 	// Get random Building
 	void PickBuilding() {
-		Transform randomObject = childs[Random.Range(0,childs.Length - 1)];
+		GameObject randomObject = childs[Random.Range(0,childs.Length - 1)];
 		if (!randomObject) {
 			PickBuilding ();
             return;
