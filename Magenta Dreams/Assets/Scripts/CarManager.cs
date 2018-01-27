@@ -36,12 +36,23 @@ public class CarManager : MonoBehaviour {
                     }
                 }
                 //2. Fall: Auto selektiert
-                //2a) Haus selktiert
+                //2a) Haus selektiert
                 else if (hit.transform.tag == "Haus")
                 {
-                    selectedObject.GetComponent<AICharacterControl>().Target = hit.transform;
-                    selectedObject.GetComponent<AICharacterControl>().ReachedTarget = false;
-					selectedObject.GetComponent<CarTargetSelect>().target = hit.transform;
+                    //ist das haus schon das ziel?
+                    if (hit.transform != selectedObject.GetComponent<AICharacterControl>().Target)
+                    {
+                        //arbeite ich gerade?
+                        if (selectedObject.GetComponent<CarTargetSelect>().Working)
+                        {
+                            Debug.Log("target: " + selectedObject.GetComponent<CarTargetSelect>().RecentBuilding.name);
+                            Debug.Log("selected: " + selectedObject.name);
+                            selectedObject.GetComponent<CarTargetSelect>().RecentBuilding.CheckOut(selectedObject.gameObject);
+                        }
+                        selectedObject.GetComponent<AICharacterControl>().Target = hit.transform;
+                        selectedObject.GetComponent<AICharacterControl>().ReachedTarget = false;
+                        selectedObject.GetComponent<CarTargetSelect>().Working = false;
+                    }
                 }
                 //2b) Neues Auto selektiert
                 else if (hit.transform.tag == "Auto")

@@ -86,32 +86,6 @@ public class HQ : MonoBehaviour
 		}
 	}
 
-	#region Trigger
-	void OnTriggerEnter(Collider other)
-	{
-		//Auto: Fahrt stoppen wenn zielobjekt erreicht
-		//dort wird verglichen, ob es der Trigger vom Ziel des Autos war
-		//- wenn ja: Stoppen
-		//- wenn nein: weiterfahren
-		if (other.CompareTag("Auto"))
-		{
-			Transform target = other.gameObject.GetComponent<AICharacterControl> ().Target;
-			// Dieses Gebäude Ziel?
-			if (target && target == transform)
-			{
-				other.gameObject.GetComponent<CarTargetSelect>().ReachedTarget(this.gameObject, false);
-			}
-		}
-	}
-
-	void OnTriggerExit(Collider other)
-	{
-		if (other.CompareTag ("Auto")) 
-		{
-			other.gameObject.GetComponent<CarTargetSelect>().EventFinished();
-		}
-	}
-	#endregion 
 		
 	#region Erstellen der HQ Werte und erstes Auto
 	void InitStats()
