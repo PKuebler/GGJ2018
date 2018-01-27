@@ -32,9 +32,12 @@ public class CarTargetSelect : MonoBehaviour {
         else if (!isWorking)
         {
             GetComponent<AICharacterControl>().Target = hq;
+            working = false;
         }
     }
 
+
+    //Löschen
     public void EventFinished()
     {
         if (GetComponent<AICharacterControl>().Target == null)
