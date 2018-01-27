@@ -19,5 +19,10 @@ public class LevelScriptEditor : Editor
 
 		EditorGUILayout.LabelField("Timer", myTarget.statusTimer.ToString() + "s");
 		EditorGUILayout.LabelField("Current Car", (myTarget.currentCar) ? myTarget.currentCar.name : "No Car");
+
+		EditorGUILayout.LabelField("Cars at Collider:");
+		foreach (GameObject car in myTarget.TriggerCars) {
+			EditorGUILayout.LabelField(car.name, "Target: " + car.GetComponent<CarTargetSelect>().target);
+		}
 	}
 }
