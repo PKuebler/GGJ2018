@@ -34,7 +34,6 @@ public class HQ : MonoBehaviour
 	public void BuyCars ()
 	{
 		int numbersOfCars = 1;
-		GetMoney ();
 
 		if( (numbersOfCars * carPrice) <= money)
 		{
@@ -42,12 +41,14 @@ public class HQ : MonoBehaviour
 			{
 				Vector3 postition = new Vector3 (this.transform.position.x + (i + 1.0f), this.transform.position.y, this.transform.position.z);
 				GameObject newCar = Instantiate (carPrefab, postition, rotation, this.transform);
-				if (isPlayer != true) 
-				{
-					//GetComponent<AIManager> ().AddCar (newCar);
+
+				if (isPlayer != true) {
+					GetComponent<AIManager> ().AddCar (newCar);
+				} else {
+					carList.Add (newCar);
+					money = money - carPrice;
 				}
-				carList.Add (newCar);
-				money = money - carPrice;
+
 			}
 		}
 	}
@@ -111,7 +112,6 @@ public class HQ : MonoBehaviour
 		}
 	}
 	#endregion 
-
 		
 	#region Erstellen der HQ Werte und erstes Auto
 	void InitStats()
