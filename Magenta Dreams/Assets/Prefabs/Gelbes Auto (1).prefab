@@ -179,6 +179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   part: {fileID: 198887769143449142}
+  isPlayerCar: 1
 --- !u!114 &114332768309258588
 MonoBehaviour:
   m_ObjectHideFlags: 1
