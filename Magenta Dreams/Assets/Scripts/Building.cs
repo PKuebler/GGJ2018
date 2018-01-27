@@ -47,39 +47,39 @@ public class Building : MonoBehaviour {
 	// Auto Checkin
 	// true => Arbeitet schon hier, arbeitet jetzt hier
 	// false => Besetzt
-	public bool Checkin(GameObject car) {
+	public bool CheckIn(GameObject car) {
 		// only cars
 		if (!car.CompareTag("Auto") && !car.CompareTag("AIAuto")) {
-			debugMessage (car, "Checkin", "Heute nur Autos!");
+			debugMessage (car, "CheckIn", "Heute nur Autos!");
 			return false;
 		}
 
-		debugMessage (car, "Checkin", "Hallo, lass mich deine Daten überprüfen!");
+		debugMessage (car, "CheckIn", "Hallo, lass mich deine Daten überprüfen!");
 
 		// arbeitet dieses auto hier schon?
 		if (currentCar == car) {
-			debugMessage (car, "Checkin", "Du arbeitest doch gerade schon hier!");
+			debugMessage (car, "CheckIn", "Du arbeitest doch gerade schon hier!");
 			return true;
 		}
 
-		debugMessage (car, "Checkin", "Du arbeitest hier noch nicht!");
+		debugMessage (car, "CheckIn", "Du arbeitest hier noch nicht!");
 
 		// wartet haus auf ein auto?
 		if (currentStatus != Status.ConnectionWait && currentStatus != Status.ErrorWait) {
-			debugMessage (car, "Checkin", "Zum Glück gerade keine Probleme... Sry.");
+			debugMessage (car, "CheckIn", "Zum Glück gerade keine Probleme... Sry.");
 			return false;
 		}
 
-		debugMessage (car, "Checkin", "Gut das du kommst, hier brennt die Hütte!");
+		debugMessage (car, "CheckIn", "Gut das du kommst, hier brennt die Hütte!");
 
 		// gehört das haus evtl einem anderen spieler?
 		if (owner != Owner.NoOne && owner != (car.tag == "AIAuto" ? Owner.AI : Owner.Player)) {
 			// informiere auto, das dieses haus wem anders gehört
-			debugMessage (car, "Checkin", "Dieses Haus gehört leider einem anderen Team!");
+			debugMessage (car, "CheckIn", "Dieses Haus gehört leider einem anderen Team!");
 			return false;
 		}
 
-		debugMessage (car, "Checkin", "Dieses Haus gehört deinem Team oder niemandem!");
+		debugMessage (car, "CheckIn", "Dieses Haus gehört deinem Team oder niemandem!");
 
 		// Fange an zu arbeiten!
 		if (currentStatus == Status.ConnectionWait) {
@@ -89,27 +89,27 @@ public class Building : MonoBehaviour {
 		}
 
 		// sage auto bescheid
-		debugMessage (car, "Checkin", "Auto beginnt mit der arbeit!");
+		debugMessage (car, "CheckIn", "Auto beginnt mit der arbeit!");
 		return true;
 	}
 
 	// Auto Checkout
-	public bool Checkout(GameObject car) {
+	public bool CheckOut(GameObject car) {
 		// only cars
 		if (!car.CompareTag("Auto") && !car.CompareTag("AIAuto")) {
-			debugMessage (car, "Checkout", "Heute nur Autos!");
+			debugMessage (car, "CheckOut", "Heute nur Autos!");
 			return false;
 		}
 
-		debugMessage (car, "Checkout", "Auto möchte auschecken!");
+		debugMessage (car, "CheckOut", "Auto möchte auschecken!");
 
 		// arbeitet dieses auto hier überhaupt?
 		if (currentCar != car) {
-			debugMessage (car, "Checkout", "Dieses Auto hat hier nicht gearbeitet!");
+			debugMessage (car, "CheckOut", "Dieses Auto hat hier nicht gearbeitet!");
 			return false;
 		}
 
-		debugMessage (car, "Checkout", "Auto hat hier gearbeitet!");
+		debugMessage (car, "CheckOut", "Auto hat hier gearbeitet!");
 
 		// update haus prozess, currentCar wird automatisch auf null gesetzt
 		if (currentStatus == Status.ConnectionProgress) {
@@ -118,7 +118,7 @@ public class Building : MonoBehaviour {
 			SetStatusErrorWait ();
 		}
 
-		debugMessage (car, "Checkout", "Im Haus arbeitet nun keiner mehr");
+		debugMessage (car, "CheckOut", "Im Haus arbeitet nun keiner mehr");
 		return true;
 	}
 
@@ -220,7 +220,7 @@ public class Building : MonoBehaviour {
 	public void SetStatusNothing() {
 		// falls auto arbeitete, informiere es, das es nicht mehr benötigt wird.
 		if (currentCar) {
-			currentCar.EventComplete ();
+			currentCar.GetComponent<CarTargetSelect>().EventComplete ();
 		}
 
 		statusTimer = 0;
@@ -239,7 +239,7 @@ public class Building : MonoBehaviour {
 	public void SetStatusConnectionWait() {
 		// falls auto arbeitete, informiere es, das es nicht mehr benötigt wird.
 		if (currentCar) {
-			currentCar.EventComplete ();
+			currentCar.GetComponent<CarTargetSelect>().EventComplete ();
 		}
 
 		statusTimer = connectionMaxWaitingTime;
@@ -258,7 +258,7 @@ public class Building : MonoBehaviour {
 	public void SetStatusConnectionProgress(GameObject car) {
 		// falls auto arbeitete, informiere es, das es nicht mehr benötigt wird.
 		if (currentCar) {
-			currentCar.EventComplete ();
+			currentCar.GetComponent<CarTargetSelect>().EventComplete ();
 		}
 
 		statusTimer = connectionDuration;
@@ -281,7 +281,7 @@ public class Building : MonoBehaviour {
 
 		// informiere auto, das es fertig ist!
 		if (currentCar) {
-			currentCar.EventComplete ();
+			currentCar.GetComponent<CarTargetSelect>().EventComplete ();
 		}
 
 		debugMessage (currentCar, "SetStatusConnection", "Updated");
@@ -295,7 +295,7 @@ public class Building : MonoBehaviour {
 	public void SetStatusErrorWait() {
 		// falls auto arbeitete, informiere es, das es nicht mehr benötigt wird.
 		if (currentCar) {
-			currentCar.EventComplete ();
+			currentCar.GetComponent<CarTargetSelect>().EventComplete ();
 		}
 
 		statusTimer = errorMaxWaitingTime;
@@ -315,7 +315,7 @@ public class Building : MonoBehaviour {
 	public void SetStatusErrorProgress(GameObject car) {
 		// falls auto arbeitete, informiere es, das es nicht mehr benötigt wird.
 		if (currentCar) {
-			currentCar.EventComplete ();
+			currentCar.GetComponent<CarTargetSelect>().EventComplete ();
 		}
 
 		statusTimer = errorDuration;
