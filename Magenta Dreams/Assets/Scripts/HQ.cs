@@ -1,29 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using System;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 public class HQ : MonoBehaviour 
 {
-
 	public GameObject carPrefab;
-	public GameObject buildingPrefab;
 	private int money;
 	private int carPrice;
-	private GameObject[] buildingArray;
 	private GameObject[] carArray;
 	private List<GameObject> carList;
-	private List<GameObject> buildingList;
+	private List<Building> buildingList;
 	private Quaternion rotation;
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
 
 		InitStats ();
+
+		Building testBuilding = new Building ();
+		testBuilding.currentStatus = Building.Status.Connection;
+		GetBuilding (testBuilding);
 
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 		
 	}
 		
@@ -31,6 +37,7 @@ public class HQ : MonoBehaviour
 	public void BuyCars ()
 	{
 		int numbersOfCars = 1;
+
 		if( (numbersOfCars * carPrice) <= money)
 		{
 			for(int i = 0; i < numbersOfCars; i++ )
@@ -41,11 +48,11 @@ public class HQ : MonoBehaviour
 				money = money - carPrice;
 			}
 		}
-		else
-		{
-			// Throw Masage -> insufficient funds
-			// DisplayDialog ("Title here", "Your text", "Ok");
-		}
+//		else
+//		{
+//			// Throw Masage -> insufficient funds
+//			// DisplayDialog ("Title here", "Your text", "Ok");
+//		}
 	}
 
 	void OnGUI ()
@@ -53,6 +60,45 @@ public class HQ : MonoBehaviour
 		GUI.Label (new Rect (0, 100, 200, 50), "Funds: " + money.ToString () + "\nCars: " + carList.Count.ToString() );
 	}
 
+	public void GetBuilding(Building newBuilding)
+	{
+		buildingList.Add (newBuilding);
+	}
+
+
+	public void GetMoney()
+	{
+		
+	}
+
+	#region Trigger
+	void OnTriggerEnter(Collider other)
+	{
+		//Auto: Fahrt stoppen wenn zielobjekt erreicht
+		//dort wird verglichen, ob es der Trigger vom Ziel des Autos war
+		//- wenn ja: Stoppen
+		//- wenn nein: weiterfahren
+		if (other.CompareTag("Auto"))
+		{
+			Transform target = other.gameObject.GetComponent<AICharacterControl> ().Target;
+			// Dieses Gebäude Ziel?
+			if (target && target == transform)
+			{
+				other.gameObject.GetComponent<CarTargetSelect>().ReachedTarget(this.gameObject, false);
+			}
+		}
+	}
+
+	void OnTriggerExit(Collider other)
+	{
+		if (other.CompareTag ("Auto")) 
+		{
+			other.gameObject.GetComponent<CarTargetSelect>().EventFinished();
+		}
+	}
+	#endregion 
+
+		
 	#region Erstellen der HQ Werte und erstes Auto
 	void InitStats()
 	{
@@ -62,14 +108,8 @@ public class HQ : MonoBehaviour
 
 		rotation = new Quaternion (0, 0, 0, 0);
 
-		// Setzen der Gebäude die bei Spielstart zum HQ gehören
-		buildingList = new List<GameObject> ();
-		buildingArray = GameObject.FindGameObjectsWithTag ("Haus");
-
-		for (int i = 0; i < buildingArray.Length; i++) 
-		{
-			buildingList.Add(buildingArray[i]);
-		}
+		// Liste für Gebäude zu HQ
+		buildingList = new List<Building> ();
 
 		// Setzen der Autos die bei Spielstart zum HQ gehören
 		carList = new List<GameObject>();
