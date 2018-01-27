@@ -12,6 +12,7 @@ public class HQ : MonoBehaviour
 
 	private int contractPay;
 	public int money;
+	public int cars;
 	private int carPrice;
 	private GameObject[] carArray;
 	private List<GameObject> carList;
@@ -26,7 +27,7 @@ public class HQ : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		
+		cars = carList.Count;
 	}
 		
 	// Buy a Car -- int numbersOfCars
@@ -74,7 +75,7 @@ public class HQ : MonoBehaviour
 
 		// Setzen der Autos die bei Spielstart zum HQ gehören
 		carList = new List<GameObject>();
-		carArray = GameObject.FindGameObjectsWithTag("Auto"); 
+		carArray = GameObject.FindGameObjectsWithTag("Auto");
 
 		for (int i = 0; i < carArray.Length; i++) 
 		{
