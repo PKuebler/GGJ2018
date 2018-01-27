@@ -9,7 +9,7 @@ public class CarTargetSelect : MonoBehaviour {
     private Transform hq;
     public ParticleSystem part;
     public bool isPlayerCar;
-
+    public Building RecentBuilding { get; set; }
     public bool Working { get; set; }
 
 
@@ -20,6 +20,7 @@ public class CarTargetSelect : MonoBehaviour {
         else
             hq = GameObject.FindGameObjectWithTag("AIHQ").GetComponent<Transform>();
         Working = false;
+        RecentBuilding = new Building();
     }
 
     void OnTriggerEnter(Collider other)
@@ -28,16 +29,24 @@ public class CarTargetSelect : MonoBehaviour {
         if (other.transform == GetComponent<AICharacterControl>().Target)
         {
             //braucht mich das haus noch?
-            bool stay = other.GetComponent<Building>().CheckIn(this.gameObject);
-            if (stay)
+            if (other.CompareTag("Haus"))
             {
-                Working = true;
-                GetComponent<AICharacterControl>().Target = null;
+                bool stay = other.GetComponent<Building>().CheckIn(this.gameObject);
+                if (stay)
+                {
+                    Working = true;
+                    RecentBuilding = GetComponent<AICharacterControl>().Target.GetComponent<Building>();
+                    GetComponent<AICharacterControl>().Target = null;
+                }
+                else
+                {
+                    GetComponent<AICharacterControl>().Target = hq;
+                    Working = false;
+                }
             }
-            else
+            else if (other.CompareTag("HQ") || other.CompareTag("AIHQ"))
             {
-                GetComponent<AICharacterControl>().Target = hq;
-                Working = false;
+                GetComponent<AICharacterControl>().Target = null;
             }
         }
     }
