@@ -14,6 +14,18 @@ public class Building : MonoBehaviour {
 		ErrorProgress // Fehler, Techniker sitzt an behebung.
 	}
 
+    //Lars: Owner
+    public enum Owner
+    {
+        NoOne,
+        Player,
+        AI
+    }
+    public Owner owner;
+
+    //Lars:
+    private AIManager aihq;
+
 	// config
 	private float connectionDuration = 30.0f; // Anschluss Arbeitsdauer
 	private float errorDuration = 30.0f; // Fehlerbehebung Arbeitsdauer
@@ -29,6 +41,9 @@ public class Building : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		updateColor ();
+        //Lars:
+        aihq = GameObject.FindGameObjectWithTag("AIHQ").GetComponent<AIManager>();
+        owner = Owner.NoOne;
 	}
 
 	// Update is called once per frame
@@ -69,9 +84,16 @@ public class Building : MonoBehaviour {
 		if (currentStatus == Status.Nothing) {
 			currentStatus = Status.ConnectionWait;
 			statusTimer = connectionMaxWaitingTime;
+            //Lars:
+            aihq.AddEvent(this.gameObject);
 		} else if (currentStatus == Status.Connection) {
 			currentStatus = Status.ErrorWait;
 			statusTimer = errorMaxWaitingTime;
+            //Lars:
+            if (owner == Owner.AI)
+            {
+                aihq.AddEvent(this.gameObject);
+            }
 		}
 		updateIcon ();
 		updateColor ();
@@ -92,8 +114,12 @@ public class Building : MonoBehaviour {
 
 	private void updateColor() {
 		if (currentStatus == Status.Connection || currentStatus == Status.ErrorProgress || currentStatus == Status.ErrorWait) {
-			gameObject.GetComponent<Renderer> ().material.color = Color.magenta;
-		} else {
+            //Lars:
+            if (owner == Owner.Player)
+                gameObject.GetComponent<Renderer>().material.color = Color.magenta;
+            else
+                gameObject.GetComponent<Renderer>().material.color = Color.blue;
+        } else {
 			gameObject.GetComponent<Renderer>().material.color = Color.grey;
 		}
 	}
@@ -104,7 +130,8 @@ public class Building : MonoBehaviour {
         //dort wird verglichen, ob es der Trigger vom Ziel des Autos war
         //- wenn ja: Stoppen
         //- wenn nein: weiterfahren
-        if (other.CompareTag("Auto"))
+        //Lars:
+        if ((other.CompareTag("Auto") && owner == Owner.Player) || (other.CompareTag("AIAuto") && owner == Owner.AI))
         {
 			// Transform target = other.gameObject.GetComponent<AICharacterControl> ().Target;
 			Transform target = other.gameObject.GetComponent<CarTargetSelect> ().target;
@@ -131,7 +158,8 @@ public class Building : MonoBehaviour {
 
 	void OnTriggerExit(Collider other)
 	{
-		if (other.CompareTag ("Auto") && other.gameObject == currentCar) {
+        //Lars:
+        if ((other.CompareTag ("Auto") || other.CompareTag("AIAuto")) && other.gameObject == currentCar) {
 			if (currentStatus == Status.ConnectionProgress) {
 				currentStatus = Status.ConnectionWait;
 			} else if (currentStatus == Status.ErrorProgress) {

@@ -32,6 +32,7 @@ public class CarManager : MonoBehaviour {
                     if (hit.transform.tag == "Auto")
                     {
                         selectedObject = hit.transform.gameObject;
+                        selectedObject.GetComponent<CarTargetSelect>().part.Play();
                     }
                 }
                 //2. Fall: Auto selektiert
@@ -45,11 +46,13 @@ public class CarManager : MonoBehaviour {
                 //2b) Neues Auto selektiert
                 else if (hit.transform.tag == "Auto")
                 {
+                    selectedObject.GetComponent<CarTargetSelect>().part.Stop();
                     selectedObject = hit.transform.gameObject;
                 }
                 //2c) Klick in die Landschaft: Auto wird abgewählt
                 else
                 {
+                    selectedObject.GetComponent<CarTargetSelect>().part.Stop();
                     selectedObject = null;
                 }
             }

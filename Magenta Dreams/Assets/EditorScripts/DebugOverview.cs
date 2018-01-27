@@ -1,0 +1,46 @@
+﻿using UnityEngine;
+using UnityEditor;
+using System.Collections;
+
+public class DebugOverview : EditorWindow
+{
+	private bool carsEnabled;
+	private bool buildingsEnabled;
+
+	[MenuItem ("Window/Debug Overview")]
+
+	public static void  ShowWindow () {
+		EditorWindow.GetWindow(typeof(DebugOverview));
+	}
+
+	void OnGUI () {
+		// cars
+		carsEnabled = EditorGUILayout.Toggle("Show Cars", carsEnabled);
+
+		if (carsEnabled)
+			ShowCars ();
+
+		buildingsEnabled = EditorGUILayout.Toggle("Show Buildings", buildingsEnabled);
+
+		if (buildingsEnabled)
+			ShowBuildings ();
+}
+
+	private void ShowCars() {
+		// The actual window code goes here
+		GameObject[] carArray = GameObject.FindGameObjectsWithTag("Auto");
+
+		for (int i = 0; i < carArray.Length; i++) {
+			EditorGUILayout.LabelField("Car ", carArray[i].name);
+		}
+	}
+
+	private void ShowBuildings() {
+		GameObject[] buildingArray = GameObject.FindGameObjectsWithTag ("Haus");
+
+		for (int i = 0; i < buildingArray.Length; i++) {
+			Building b = buildingArray [i].GetComponent<Building> ();
+			b.currentStatus = (Building.Status)EditorGUILayout.EnumPopup(buildingArray [i].name, b.currentStatus);
+		}
+	}
+}
