@@ -1,21 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 public class AIManager : MonoBehaviour {
 
-    private List<GameObject> carList;
+    [SerializeField]
+    private List<CarTargetSelect> carList;
+    [SerializeField]
     private List<GameObject> buildingsWithEvents;
 
 	// Use this for initialization
-	void Start () {
-        carList = new List<GameObject>();
+	void Awake () {
+        carList = new List<CarTargetSelect>();
         buildingsWithEvents = new List<GameObject>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+        if (buildingsWithEvents.Count > 0)
+        {
+            foreach (CarTargetSelect car in carList)
+            {
+                if (car.GetComponent<AICharacterControl>().Target == null || car.GetComponent<AICharacterControl>().Target == this.transform)
+                {
+                    car.GetComponent<AICharacterControl>().Target = buildingsWithEvents[0].transform;
+                }
+            }
+        }
 	}
 
     public void AddEvent (GameObject building)
@@ -30,6 +42,7 @@ public class AIManager : MonoBehaviour {
 
     public void AddCar (GameObject car)
     {
-
+        Debug.Log(car);
+        carList.Add(car.GetComponent<CarTargetSelect>());
     }
 }
