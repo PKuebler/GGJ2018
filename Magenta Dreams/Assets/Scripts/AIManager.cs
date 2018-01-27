@@ -43,7 +43,7 @@ public class AIManager : MonoBehaviour {
             {
                 foreach (CarTargetSelect car in carList)
                 {
-                    if (car.GetComponent<AICharacterControl>().Target == null || car.GetComponent<AICharacterControl>().Target == this.transform)
+                    if ((car.GetComponent<AICharacterControl>().Target == null && !car.Working) || car.GetComponent<AICharacterControl>().Target == this.transform)
                     {
                         Transform closestTarget = GetDistance(buildingsWithEvents, car);
                         car.GetComponent<AICharacterControl>().Target = closestTarget;

@@ -6,8 +6,6 @@ using UnityEngine.AI;
 
 public class CarTargetSelect : MonoBehaviour {
 
-    private bool working;
-    private bool waitingAtHQ;
     private Transform hq;
 	public Transform target;
     public ParticleSystem part;
@@ -15,40 +13,36 @@ public class CarTargetSelect : MonoBehaviour {
 
     public NavMeshAgent agent;
 
+    public bool Working { get; private set; }
+
 
     void Start ()
     {
-        working = false;
-        waitingAtHQ = false;
         if (isPlayerCar)
             hq = GameObject.FindGameObjectWithTag("HQ").GetComponent<Transform>();
         else
             hq = GameObject.FindGameObjectWithTag("AIHQ").GetComponent<Transform>();
         agent = GetComponent<NavMeshAgent>();
+
+        Working = false;
     }
 
 	public void ReachedTarget(GameObject triggerObj, bool isWorking)
     {
-        if (isWorking && !working)
+        if (isWorking)
         {
             GetComponent<AICharacterControl>().Target = null;
-            working = true;
+            Working = true;
         }
         else if (!isWorking)
         {
             GetComponent<AICharacterControl>().Target = hq;
-            working = false;
+            Working = false;
         }
     }
 
-
-    //Löschen
     public void EventFinished()
     {
-        if (GetComponent<AICharacterControl>().Target == null)
-        {
-            GetComponent<AICharacterControl>().Target = hq;
-        }
-        working = false;
+
     }
 }
