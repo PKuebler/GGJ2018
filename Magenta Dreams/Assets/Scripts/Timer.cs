@@ -50,6 +50,6 @@ public class Timer : MonoBehaviour {
 			PickBuilding ();
             return;
 		}
-		randomObject.GetComponent<Building>().SetAction ();
+		randomObject.GetComponent<Building>().SetEvent ();
 	}
 }
