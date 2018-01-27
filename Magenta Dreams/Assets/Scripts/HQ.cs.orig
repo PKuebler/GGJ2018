@@ -10,12 +10,15 @@ public class HQ : MonoBehaviour
 	public GameObject carPrefab;
 	public bool isPlayer; 
 
-	public int cars;
-
 	private int contractPay;
+<<<<<<< HEAD
+	public int money;
+	public int cars;
+=======
     [SerializeField]
 	private int money;
     public int Money { get { return money; } }
+>>>>>>> df82d6cc74a64c422c6b4981a6db1fa47452015c
 	private int carPrice;
     public int CarPrice { get { return carPrice; } }
 	private GameObject[] carArray;
@@ -31,7 +34,11 @@ public class HQ : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+<<<<<<< HEAD
 		cars = carList.Count;
+=======
+
+>>>>>>> df82d6cc74a64c422c6b4981a6db1fa47452015c
 	}
 		
 	// Buy a Car -- int numbersOfCars
@@ -87,7 +94,7 @@ public class HQ : MonoBehaviour
 
 		// Setzen der Autos die bei Spielstart zum HQ gehören
 		carList = new List<GameObject>();
-		carArray = GameObject.FindGameObjectsWithTag("Auto"); 
+		carArray = GameObject.FindGameObjectsWithTag("Auto");
 
 		for (int i = 0; i < carArray.Length; i++) 
 		{
