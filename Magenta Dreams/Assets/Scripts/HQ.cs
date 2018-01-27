@@ -14,7 +14,7 @@ public class HQ : MonoBehaviour
 	public int money;
 	private int carPrice;
 	private GameObject[] carArray;
-	private List<GameObject> carList;
+	public List<GameObject> carList;
 	private Quaternion rotation;
 
 	// Use this for initialization
@@ -26,7 +26,7 @@ public class HQ : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		
+
 	}
 		
 	// Buy a Car -- int numbersOfCars

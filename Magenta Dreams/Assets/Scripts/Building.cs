@@ -52,8 +52,9 @@ public class Building : MonoBehaviour {
 	// true => Arbeitet schon hier, arbeitet jetzt hier
 	// false => Besetzt
 	public bool CheckIn(GameObject car) {
-		// only cars
-		if (!car.CompareTag("Auto") && !car.CompareTag("AIAuto")) {
+        // only cars
+        Debug.Log("auto eingecheckt");
+        if (!car.CompareTag("Auto") && !car.CompareTag("AIAuto")) {
 			debugMessage (car, "CheckIn", "Heute nur Autos!");
 			return false;
 		}
