@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AIManager : MonoBehaviour {
 
-    public GameObject car;
     private List<GameObject> carList;
     private List<GameObject> buildingsWithEvents;
 
@@ -12,9 +11,6 @@ public class AIManager : MonoBehaviour {
 	void Start () {
         carList = new List<GameObject>();
         buildingsWithEvents = new List<GameObject>();
-
-        Debug.Log(car);
-        carList.Add(car);
 	}
 	
 	// Update is called once per frame
