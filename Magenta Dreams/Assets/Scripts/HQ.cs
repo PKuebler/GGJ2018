@@ -48,6 +48,7 @@ public class HQ : MonoBehaviour
 
 				if (isPlayer != true) {
 					GetComponent<AIManager> ().AddCar (newCar);
+					money = money - carPrice;
 				} else {
 					carList.Add (newCar);
 					money = money - carPrice;

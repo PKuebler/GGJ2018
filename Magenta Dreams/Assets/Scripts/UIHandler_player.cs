@@ -20,7 +20,7 @@ public class UIHandler_player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		moneyText =  hq_player.GetComponent<HQ> ().money.ToString();
+		moneyText =  hq_player.GetComponent<HQ> ().Money.ToString();
 		moneyTextField.text = moneyText;
 
 		carText = hq_player.GetComponent<HQ> ().cars.ToString ();
