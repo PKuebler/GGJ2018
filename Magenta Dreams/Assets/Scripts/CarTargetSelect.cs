@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.ThirdPerson;
+using UnityEngine.AI;
 
 public class CarTargetSelect : MonoBehaviour {
 
@@ -12,6 +13,9 @@ public class CarTargetSelect : MonoBehaviour {
     public ParticleSystem part;
     public bool isPlayerCar;
 
+    public NavMeshAgent agent;
+
+
     void Start ()
     {
         working = false;
@@ -20,6 +24,7 @@ public class CarTargetSelect : MonoBehaviour {
             hq = GameObject.FindGameObjectWithTag("HQ").GetComponent<Transform>();
         else
             hq = GameObject.FindGameObjectWithTag("AIHQ").GetComponent<Transform>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
 	public void ReachedTarget(GameObject triggerObj, bool isWorking)
