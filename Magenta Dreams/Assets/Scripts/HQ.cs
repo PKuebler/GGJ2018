@@ -10,6 +10,8 @@ public class HQ : MonoBehaviour
 	public GameObject carPrefab;
 	public bool isPlayer; 
 
+	public int cars;
+
 	private int contractPay;
     [SerializeField]
 	private int money;
@@ -29,7 +31,7 @@ public class HQ : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-
+		cars = carList.Count;
 	}
 		
 	// Buy a Car -- int numbersOfCars
