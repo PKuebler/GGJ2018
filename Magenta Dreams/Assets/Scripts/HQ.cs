@@ -53,19 +53,19 @@ public class HQ : MonoBehaviour
 
     public void AIBuyCars()
     {
-		if ((numbersOfCars * (int)((float)carPrice * 1.5f)) <= money) 
+		if ((numbersOfCars * (carPrice * 2)) <= money) 
 		{
 			Vector3 postition = new Vector3(this.transform.position.x + (1.0f), this.transform.position.y, this.transform.position.z);
 			GameObject newCar = Instantiate(carPrefab, postition, rotation, this.transform);
-			money = money - (carPrice * (int)((float)GetComponent<AIManager> ().CarList.Count * 1.5f));
+			money = money - (carPrice * (GetComponent<AIManager> ().CarList.Count * 2));
 			GetComponent<AIManager>().AddCar(newCar);
 		}
     }
 
-	void OnGUI ()
-	{
-		GUI.Label (new Rect (0, 100, 200, 50), "Funds: " + money.ToString () + "\nCars: " + carList.Count.ToString() );
-	}
+//	void OnGUI ()
+//	{
+//		GUI.Label (new Rect (0, 100, 200, 50), "Funds: " + money.ToString () + "\nCars: " + carList.Count.ToString() );
+//	}
 		
 	public void SetMoney(float newMoney)
 	{
