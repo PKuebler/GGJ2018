@@ -17,6 +17,8 @@ public class LevelScriptEditor : Editor
 			myTarget.SetStatusToDebug();
 		}
 
+		myTarget.isDebug = EditorGUILayout.Toggle("Debug Modus", myTarget.isDebug);
+
 		EditorGUILayout.LabelField("Timer", myTarget.statusTimer.ToString() + "s");
 		EditorGUILayout.LabelField("Current Car", (myTarget.currentCar) ? myTarget.currentCar.name : "No Car");
 
