@@ -39,7 +39,7 @@ public class AIManager : MonoBehaviour {
         timer += Time.deltaTime;
         if (timer > 3.0f)
         {
-            if (buildingsWithEvents.Count > 1)
+            if (buildingsWithEvents.Count > 0)
             {
                 foreach (CarTargetSelect car in carList)
                 {
