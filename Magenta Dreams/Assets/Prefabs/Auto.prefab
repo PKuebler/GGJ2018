@@ -25,11 +25,12 @@ GameObject:
   - component: {fileID: 114603817433663036}
   - component: {fileID: 95021994077523550}
   - component: {fileID: 136540564876264660}
+  - component: {fileID: 114147669278410998}
   - component: {fileID: 54108816073982910}
   - component: {fileID: 114028723300210568}
   - component: {fileID: 195097599188975740}
   - component: {fileID: 114629416206538790}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Auto
   m_TagString: Auto
   m_Icon: {fileID: 0}
@@ -153,6 +154,17 @@ MonoBehaviour:
   m_MoveSpeedMultiplier: 1
   m_AnimSpeedMultiplier: 1
   m_GroundCheckDistance: 0.1
+--- !u!114 &114147669278410998
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1615334730870674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fabe01889d7c4b1fbe470f862cb938d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114603817433663036
 MonoBehaviour:
   m_ObjectHideFlags: 1

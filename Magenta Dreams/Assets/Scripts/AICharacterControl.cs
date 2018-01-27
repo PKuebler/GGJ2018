@@ -16,6 +16,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             get { return target; }
             set { target = value; }
         }
+        public bool ReachedTarget { get; set; }
 
 
         private void Start()
@@ -26,11 +27,21 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 	        agent.updateRotation = false;
 	        agent.updatePosition = true;
+
+            ReachedTarget = false;
         }
 
 
         private void Update()
         {
+            if (ReachedTarget)
+            {
+                if (Vector3.Distance(this.transform.position, target.transform.position) < agent.stoppingDistance)
+                {
+                    target = null;
+                }
+            }
+
             if (target != null)
                 agent.SetDestination(target.position);
 

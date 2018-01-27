@@ -6,12 +6,11 @@ public class Timer : MonoBehaviour {
 	public GameObject rootBuildings;
 	private Transform[] childs;
 	public float timeLeft = 30.0f;
-	public float timeBetweenEvents = 30.0f;
+	private float timeBetweenEvents = 10.0f;
 
 	// Use this for initialization
 	void Start () {
 		childs = rootBuildings.GetComponentsInChildren<Transform>();
-		PickBuilding();
 
 		// set start timer
 		timeLeft = timeBetweenEvents;
@@ -28,8 +27,11 @@ public class Timer : MonoBehaviour {
 
 	// Get random Building
 	void PickBuilding() {
-		Transform randomObject = childs[Random.Range(0,childs.Length)];
-		print (randomObject.name);
+		Transform randomObject = childs[Random.Range(0,childs.Length - 1)];
+		if (!randomObject) {
+			PickBuilding ();
+            return;
+		}
 		randomObject.GetComponent<Building>().SetAction ();
 	}
 }
