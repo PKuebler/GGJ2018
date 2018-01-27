@@ -240,6 +240,7 @@ public class Building : MonoBehaviour {
 		statusTimer = 0;
 		currentCar = null;
 		currentStatus = Status.Nothing;
+		owner = Owner.NoOne;
 
 		// informiere ki das dieses objekt keinen techniker mehr braucht
 		if (aihq) {
@@ -259,6 +260,7 @@ public class Building : MonoBehaviour {
 		statusTimer = connectionMaxWaitingTime;
 		currentCar = null;
 		currentStatus = Status.ConnectionWait;
+		owner = Owner.NoOne;
 
 		// informiere ki das dieses objekt einen techniker braucht
 		if (aihq) {
@@ -277,6 +279,7 @@ public class Building : MonoBehaviour {
 
 		statusTimer = connectionDuration;
 		currentStatus = Status.ConnectionProgress;
+		owner = Owner.NoOne;
 
 		// neues auto
 		currentCar = car;
