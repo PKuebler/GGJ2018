@@ -12,6 +12,7 @@ public class HQ : MonoBehaviour
 
 	public int cars;
 
+	private int numbersOfCars = 1;
 	private int contractPay;
     [SerializeField]
 	private int money;
@@ -37,39 +38,34 @@ public class HQ : MonoBehaviour
 	// Buy a Car -- int numbersOfCars
 	public void BuyCars ()
 	{
-		int numbersOfCars = 1;
-
-		if( (numbersOfCars * carPrice) <= money)
+		if( (numbersOfCars * (carPrice * carList.Count)) <= money)
 		{
 			for(int i = 0; i < numbersOfCars; i++ )
 			{
 				Vector3 postition = new Vector3 (this.transform.position.x + (i + 1.0f), this.transform.position.y, this.transform.position.z);
 				GameObject newCar = Instantiate (carPrefab, postition, rotation, this.transform);
 
-				if (isPlayer != true) {
-					GetComponent<AIManager> ().AddCar (newCar);
-					money = money - carPrice;
-				} else {
-					carList.Add (newCar);
-					money = money - carPrice;
-				}
-
+				money = money - (carPrice * carList.Count);
+				carList.Add (newCar);
 			}
 		}
 	}
 
     public void AIBuyCars()
     {
-        Vector3 postition = new Vector3(this.transform.position.x + (1.0f), this.transform.position.y, this.transform.position.z);
-        GameObject newCar = Instantiate(carPrefab, postition, rotation, this.transform);
-        GetComponent<AIManager>().AddCar(newCar);
-        money = money - carPrice;
+		if ((numbersOfCars * (carPrice * 2)) <= money) 
+		{
+			Vector3 postition = new Vector3(this.transform.position.x + (1.0f), this.transform.position.y, this.transform.position.z);
+			GameObject newCar = Instantiate(carPrefab, postition, rotation, this.transform);
+			money = money - (carPrice * (GetComponent<AIManager> ().CarList.Count * 2));
+			GetComponent<AIManager>().AddCar(newCar);
+		}
     }
 
-	void OnGUI ()
-	{
-		GUI.Label (new Rect (0, 100, 200, 50), "Funds: " + money.ToString () + "\nCars: " + carList.Count.ToString() );
-	}
+//	void OnGUI ()
+//	{
+//		GUI.Label (new Rect (0, 100, 200, 50), "Funds: " + money.ToString () + "\nCars: " + carList.Count.ToString() );
+//	}
 		
 	public void SetMoney(float newMoney)
 	{
@@ -95,7 +91,19 @@ public class HQ : MonoBehaviour
 			carList.Add(carArray[i]);
 		}
 		// Kauf des ersten Autos
-		BuyCars ();
+		if (isPlayer != true) 
+		{
+			money = 0;
+			Vector3 postition = new Vector3(this.transform.position.x + (1.0f), this.transform.position.y, this.transform.position.z);
+			GameObject newCar = Instantiate(carPrefab, postition, rotation, this.transform);
+			GetComponent<AIManager>().AddCar(newCar);
+		} else 
+		{
+			money = 0;
+			Vector3 postition = new Vector3 (this.transform.position.x + (0 + 1.0f), this.transform.position.y, this.transform.position.z);
+			GameObject newCar = Instantiate (carPrefab, postition, rotation, this.transform);
+			carList.Add (newCar);
+		}
 	}
 	#endregion
 }
