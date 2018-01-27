@@ -11,7 +11,7 @@ public class HQ : MonoBehaviour
 	public bool isPlayer; 
 
 	private int contractPay;
-	private int money;
+	public int money;
 	private int carPrice;
 	private GameObject[] carArray;
 	private List<GameObject> carList;

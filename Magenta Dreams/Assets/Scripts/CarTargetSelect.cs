@@ -35,7 +35,7 @@ public class CarTargetSelect : MonoBehaviour {
             distance = Vector3.Distance(this.transform.position, GetComponent<AICharacterControl>().Target.transform.position);
             if (distance < 2.8f)
             {
-                GetComponent<AICharacterControl>().Target.GetComponent<Building>().OnArrived();
+               // GetComponent<AICharacterControl>().Target.GetComponent<Building>().OnArrived();
             }
         }
     }
