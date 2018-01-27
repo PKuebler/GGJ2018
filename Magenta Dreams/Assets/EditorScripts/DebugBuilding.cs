@@ -14,7 +14,26 @@ public class LevelScriptEditor : Editor
 		myTarget.currentStatus = (Building.Status)EditorGUILayout.EnumPopup("Status:", myTarget.currentStatus);
 
 		if (lastStatus != myTarget.currentStatus) {
-			myTarget.statusTimer = 5000.0f;
+			switch (myTarget.currentStatus) {
+			case Building.Status.Nothing:
+				myTarget.SetStatusNothing();
+				break;
+			case Building.Status.ConnectionWait:
+				myTarget.SetStatusConnectionWait();
+				break;
+			case Building.Status.ConnectionProgress:
+				// no car
+				break;
+			case Building.Status.Connection:
+				myTarget.SetStatusConnection ();
+				break;
+			case Building.Status.ErrorWait:
+				myTarget.SetStatusErrorWait ();
+				break;
+			case Building.Status.ErrorProgress:
+				// no car
+				break;
+			}
 		}
 
 		EditorGUILayout.LabelField("Timer", myTarget.statusTimer.ToString() + "s");

@@ -6,6 +6,7 @@ public class DebugOverview : EditorWindow
 {
 	private bool carsEnabled;
 	private bool buildingsEnabled;
+	private Vector2 scrollPos;
 
 	[MenuItem ("Window/Debug Overview")]
 
@@ -14,6 +15,8 @@ public class DebugOverview : EditorWindow
 	}
 
 	void OnGUI () {
+		EditorGUILayout.BeginVertical ();
+		scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
 		// cars
 		carsEnabled = EditorGUILayout.Toggle("Show Cars", carsEnabled);
 
@@ -24,6 +27,9 @@ public class DebugOverview : EditorWindow
 
 		if (buildingsEnabled)
 			ShowBuildings ();
+
+		EditorGUILayout.EndScrollView();
+		EditorGUILayout.EndVertical ();
 }
 
 	private void ShowCars() {
@@ -40,7 +46,13 @@ public class DebugOverview : EditorWindow
 
 		for (int i = 0; i < buildingArray.Length; i++) {
 			Building b = buildingArray [i].GetComponent<Building> ();
-			b.currentStatus = (Building.Status)EditorGUILayout.EnumPopup(buildingArray [i].name, b.currentStatus);
+			b.currentStatus = (Building.Status)EditorGUILayout.EnumPopup("[" + ((b.currentCar) ? "X" : " ") + "] " + buildingArray [i].name + " " + b.statusTimer + "s", b.currentStatus);
 		}
+	}
+
+	void OnInspectorUpdate() {
+		// Call Repaint on OnInspectorUpdate as it repaints the windows
+		// less times as if it was OnGUI/Update
+		Repaint();
 	}
 }

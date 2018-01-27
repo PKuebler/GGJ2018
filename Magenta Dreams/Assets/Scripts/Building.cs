@@ -14,7 +14,6 @@ public class Building : MonoBehaviour {
 		ErrorProgress // Fehler, Techniker sitzt an behebung.
 	}
 
-    //Lars: Owner
     public enum Owner
     {
         NoOne,
@@ -23,7 +22,6 @@ public class Building : MonoBehaviour {
     }
     public Owner owner;
 
-    //Lars:
     private AIManager aihq;
 
 	// config
@@ -41,7 +39,6 @@ public class Building : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		updateColor ();
-        //Lars:
         aihq = GameObject.FindGameObjectWithTag("AIHQ").GetComponent<AIManager>();
         owner = Owner.NoOne;
 	}
@@ -55,25 +52,20 @@ public class Building : MonoBehaviour {
 			if (statusTimer < 0) {
 				if (currentStatus == Status.ConnectionWait) {
 					// wurde nicht angeschlossen
-					currentStatus = Status.Nothing;
+					SetStatusNothing ();
 				} else if (currentStatus == Status.ConnectionProgress) {
 					// fertig angeschlossen
-					currentStatus = Status.Connection;
-					currentCar.GetComponent<CarTargetSelect> ().EventFinished ();
+					SetStatusConnection();
 				} else if (currentStatus == Status.ErrorWait) {
 					// fehler wurde nicht behoben
-					currentStatus = Status.Nothing;
+					SetStatusNothing();
 				} else if (currentStatus == Status.ErrorProgress) {
 					// fehler wurde behoben
-					currentStatus = Status.Connection;
-					currentCar.GetComponent<CarTargetSelect> ().EventFinished ();
+					SetStatusConnection();
 				}
 				// clear current car
 				currentCar = null;
 				statusTimer = 0;
-
-				updateIcon ();
-				updateColor ();
 			}
 		}
 	}
@@ -82,21 +74,10 @@ public class Building : MonoBehaviour {
 	// Checkt welche Eintritt
 	public void SetAction() {
 		if (currentStatus == Status.Nothing) {
-			currentStatus = Status.ConnectionWait;
-			statusTimer = connectionMaxWaitingTime;
-            //Lars:
-            aihq.AddEvent(this.gameObject);
+			SetStatusConnectionWait ();
 		} else if (currentStatus == Status.Connection) {
-			currentStatus = Status.ErrorWait;
-			statusTimer = errorMaxWaitingTime;
-            //Lars:
-            if (owner == Owner.AI)
-            {
-                aihq.AddEvent(this.gameObject);
-            }
+			SetStatusErrorWait ();
 		}
-		updateIcon ();
-		updateColor ();
 	}
 
 	private void updateIcon() {
@@ -114,7 +95,6 @@ public class Building : MonoBehaviour {
 
 	private void updateColor() {
 		if (currentStatus == Status.Connection || currentStatus == Status.ErrorProgress || currentStatus == Status.ErrorWait) {
-            //Lars:
             if (owner == Owner.Player)
                 gameObject.GetComponent<Renderer>().material.color = Color.magenta;
             else
@@ -130,7 +110,6 @@ public class Building : MonoBehaviour {
         //dort wird verglichen, ob es der Trigger vom Ziel des Autos war
         //- wenn ja: Stoppen
         //- wenn nein: weiterfahren
-        //Lars:
         if ((other.CompareTag("Auto") && owner == Owner.Player) || (other.CompareTag("AIAuto") && owner == Owner.AI))
         {
 			// Transform target = other.gameObject.GetComponent<AICharacterControl> ().Target;
@@ -141,15 +120,11 @@ public class Building : MonoBehaviour {
 				bool isCarWorking = false;
 
 				if (currentStatus == Status.ConnectionWait) {
-					currentStatus = Status.ConnectionProgress;
-					statusTimer = connectionDuration;
+					SetStatusConnectionProgress (other.gameObject);
 					isCarWorking = true;
-					currentCar = other.gameObject;
 				} else if (currentStatus == Status.ErrorWait) {
-					currentStatus = Status.ErrorProgress;
-					statusTimer = errorDuration;
+					SetStatusErrorProgress (other.gameObject);
 					isCarWorking = true;
-					currentCar = other.gameObject;
 				}
 				other.gameObject.GetComponent<CarTargetSelect>().ReachedTarget(this.gameObject, isCarWorking);
 			}
@@ -158,12 +133,11 @@ public class Building : MonoBehaviour {
 
 	void OnTriggerExit(Collider other)
 	{
-        //Lars:
         if ((other.CompareTag ("Auto") || other.CompareTag("AIAuto")) && other.gameObject == currentCar) {
 			if (currentStatus == Status.ConnectionProgress) {
-				currentStatus = Status.ConnectionWait;
+				SetStatusConnectionWait ();
 			} else if (currentStatus == Status.ErrorProgress) {
-				currentStatus = Status.ErrorWait;
+				SetStatusErrorWait ();
 			}
 			currentCar = null;
 		}
@@ -178,5 +152,58 @@ public class Building : MonoBehaviour {
 			GUI.Label(new Rect(300, 50, 150, 50), "Status: " + currentStatus);
 			GUI.Label(new Rect(300, 100, 150, 50), "Status Timer: " + statusTimer.ToString());
 		}
+	}
+
+	public void SetStatusNothing() {
+		currentStatus = Status.Nothing;
+
+		UpdateUI ();
+	}
+
+	public void SetStatusConnectionWait() {
+		currentStatus = Status.ConnectionWait;
+		statusTimer = connectionMaxWaitingTime;
+		if (aihq) {
+			aihq.AddEvent (gameObject);
+		}
+
+		UpdateUI ();
+	}
+
+	public void SetStatusConnectionProgress(GameObject car) {
+		currentStatus = Status.ConnectionProgress;
+		statusTimer = connectionDuration;
+		currentCar = car;
+
+		UpdateUI ();
+	}
+
+	public void SetStatusConnection() {
+		currentStatus = Status.Connection;
+		currentCar.GetComponent<CarTargetSelect> ().EventFinished ();
+		UpdateUI ();
+	}
+
+	public void SetStatusErrorWait() {
+		currentStatus = Status.ErrorWait;
+		statusTimer = errorMaxWaitingTime;
+		if (owner == Owner.AI && aihq)
+		{
+			aihq.AddEvent(gameObject);
+		}
+		UpdateUI ();
+	}
+
+	public void SetStatusErrorProgress(GameObject car) {
+		currentStatus = Status.ErrorProgress;
+		statusTimer = errorDuration;
+		currentCar = car;
+
+		UpdateUI ();
+	}
+
+	private void UpdateUI() {
+		updateIcon ();
+		updateColor ();
 	}
 }
