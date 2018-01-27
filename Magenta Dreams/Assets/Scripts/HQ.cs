@@ -45,8 +45,8 @@ public class HQ : MonoBehaviour
 				Vector3 postition = new Vector3 (this.transform.position.x + (i + 1.0f), this.transform.position.y, this.transform.position.z);
 				GameObject newCar = Instantiate (carPrefab, postition, rotation, this.transform);
 
-				carList.Add (newCar);
 				money = money - (carPrice * carList.Count);
+				carList.Add (newCar);
 			}
 		}
 	}
@@ -57,8 +57,8 @@ public class HQ : MonoBehaviour
 		{
 			Vector3 postition = new Vector3(this.transform.position.x + (1.0f), this.transform.position.y, this.transform.position.z);
 			GameObject newCar = Instantiate(carPrefab, postition, rotation, this.transform);
-			GetComponent<AIManager>().AddCar(newCar);
 			money = money - (carPrice * (int)((float)GetComponent<AIManager> ().CarList.Count * 1.5f));
+			GetComponent<AIManager>().AddCar(newCar);
 		}
     }
 
