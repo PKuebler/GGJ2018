@@ -54,7 +54,7 @@ public class HQ : MonoBehaviour
 
     public void AIBuyCars()
     {
-		if ((numbersOfCars * (carPrice * difficultAI)) <= money) 
+		if (numbersOfCars * (carPrice * (GetComponent<AIManager> ().CarList.Count * difficultAI)) <= money) 
 		{
 			Vector3 postition = new Vector3(this.transform.position.x + (1.0f), this.transform.position.y, this.transform.position.z);
 			GameObject newCar = Instantiate(carPrefab, postition, rotation, this.transform);
