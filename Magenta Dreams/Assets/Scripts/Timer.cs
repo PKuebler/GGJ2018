@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Timer : MonoBehaviour {
-	public GameObject rootBuildings;
-	private Transform[] childs;
+	private GameObject[] childs;
 	public float timeLeft = 30.0f;
 	private float timeBetweenEvents = 10.0f;
 
 	// Use this for initialization
 	void Start () {
-		childs = rootBuildings.GetComponentsInChildren<Transform>();
+		childs = GameObject.FindGameObjectsWithTag ("Haus");
+
 
 		// set start timer
 		timeLeft = timeBetweenEvents;
@@ -27,7 +27,7 @@ public class Timer : MonoBehaviour {
 
 	// Get random Building
 	void PickBuilding() {
-		Transform randomObject = childs[Random.Range(0,childs.Length - 1)];
+		GameObject randomObject = childs[Random.Range(0,childs.Length - 1)];
 		if (!randomObject) {
 			PickBuilding ();
             return;
