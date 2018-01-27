@@ -27,7 +27,7 @@ public class Timer : MonoBehaviour {
 
 	// Get random Building
 	void PickBuilding() {
-		Transform randomObject = childs[Random.Range(0,childs.Length)];
+		Transform randomObject = childs[Random.Range(0,childs.Length - 1)];
 		if (!randomObject) {
 			PickBuilding ();
             return;
