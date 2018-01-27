@@ -39,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1981790399691290}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.16, y: 0.5, z: -3}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -121,6 +121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 458a5a7ab65111542ba129c27ed70949, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carList: []
+  buildingsWithEvents: []
 --- !u!114 &114935074242310826
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -133,3 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carPrefab: {fileID: 1615334730870674, guid: b6e389d5554b0454eade5f21f9941f8e, type: 2}
+  isPlayer: 0
+  cars: 0
+  money: 0
+  carList: []
