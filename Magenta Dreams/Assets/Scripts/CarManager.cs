@@ -45,7 +45,7 @@ public class CarManager : MonoBehaviour {
                         //arbeite ich gerade?
                         if (selectedObject.GetComponent<CarTargetSelect>().Working)
                         {
-                            selectedObject.GetComponent<AICharacterControl>().Target.GetComponent<Building>().CheckOut(this.gameObject);
+                            selectedObject.GetComponent<AICharacterControl>().Target.GetComponent<Building>().CheckOut(selectedObject.gameObject);
                         }
                         selectedObject.GetComponent<AICharacterControl>().Target = hit.transform;
                         selectedObject.GetComponent<AICharacterControl>().ReachedTarget = false;
