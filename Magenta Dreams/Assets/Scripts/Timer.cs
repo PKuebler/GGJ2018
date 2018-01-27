@@ -7,11 +7,11 @@ public class Timer : MonoBehaviour {
 	public HQ player_hq;
 	public HQ ai_hq;
 
-	public float moneyTimeLeft = 40.0f;
-	private float timeBetweenMoney = 20.0f;
+	public float moneyTimeLeft = 20.0f;
+	private float timeBetweenMoney = 5.0f;
 
 	public float timeLeft = 30.0f;
-	private float timeBetweenEvents = 10.0f;
+	private float timeBetweenEvents = 5.0f;
 		
 	// Use this for initialization
 	void Start () {
