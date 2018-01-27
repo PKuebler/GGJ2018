@@ -46,7 +46,13 @@ public class DebugOverview : EditorWindow
 
 		for (int i = 0; i < buildingArray.Length; i++) {
 			Building b = buildingArray [i].GetComponent<Building> ();
+			Building.Status lastStatus = b.currentStatus;
+
 			b.currentStatus = (Building.Status)EditorGUILayout.EnumPopup("[" + ((b.currentCar) ? "X" : " ") + "] " + buildingArray [i].name + " " + b.statusTimer + "s", b.currentStatus);
+
+			if (lastStatus != b.currentStatus) {
+				b.SetStatusToDebug();
+			}
 		}
 	}
 

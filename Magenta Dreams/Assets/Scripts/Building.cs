@@ -143,14 +143,26 @@ public class Building : MonoBehaviour {
 		}
 	}
 
-	private void OnGUI()
-	{
-		if (currentStatus != Status.Nothing) {
-			if (currentCar != null) {
-				GUI.Label(new Rect(300, 0, 150, 50), "Aktives Objekt: " + currentCar.name);
-			}
-			GUI.Label(new Rect(300, 50, 150, 50), "Status: " + currentStatus);
-			GUI.Label(new Rect(300, 100, 150, 50), "Status Timer: " + statusTimer.ToString());
+	public void SetStatusToDebug() {
+		switch (currentStatus) {
+			case Status.Nothing:
+				SetStatusNothing();
+				break;
+			case Status.ConnectionWait:
+				SetStatusConnectionWait();
+				break;
+			case Status.ConnectionProgress:
+				// no car
+				break;
+			case Status.Connection:
+				SetStatusConnection ();
+				break;
+			case Status.ErrorWait:
+				SetStatusErrorWait ();
+				break;
+			case Status.ErrorProgress:
+				// no car
+				break;
 		}
 	}
 
