@@ -106,7 +106,8 @@ public class Building : MonoBehaviour {
         //- wenn nein: weiterfahren
         if (other.CompareTag("Auto"))
         {
-			Transform target = other.gameObject.GetComponent<AICharacterControl> ().Target;
+			// Transform target = other.gameObject.GetComponent<AICharacterControl> ().Target;
+			Transform target = other.gameObject.GetComponent<CarTargetSelect> ().target;
 			// Dieses Gebäude Ziel?
 			if (target && target == transform && currentCar == null) {
 				// Überhaupt bedarf?

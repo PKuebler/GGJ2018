@@ -8,6 +8,7 @@ public class CarTargetSelect : MonoBehaviour {
     private bool working;
     private bool waitingAtHQ;
     private Transform hq;
+	public Transform target;
 
     void Start ()
     {
