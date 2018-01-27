@@ -23,65 +23,53 @@ public class AIManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        /*if (buildingsWithEvents.Count > 0)
-        {
-            foreach (CarTargetSelect car in carList)
-            {
-                if (car.GetComponent<AICharacterControl>().Target == null || car.GetComponent<AICharacterControl>().Target == this.transform)
-                {
-                    car.GetComponent<AICharacterControl>().Target = buildingsWithEvents[0].transform;
-                    car.target = buildingsWithEvents[0].transform;
-                }
-            }
-        }*/
-        
-        
         timer += Time.deltaTime;
-        if (timer > 3.0f)
+        if (timer > 1.0f)
         {
             if (buildingsWithEvents.Count > 0)
             {
+                List<GameObject> errorList = new List<GameObject>();
+                errorList = CheckForErrorWait(buildingsWithEvents);
+
                 foreach (CarTargetSelect car in carList)
                 {
                     if ((car.GetComponent<AICharacterControl>().Target == null && !car.Working) || car.GetComponent<AICharacterControl>().Target == this.transform)
                     {
-                        Transform closestTarget = GetDistance(buildingsWithEvents, car);
-                        car.GetComponent<AICharacterControl>().Target = closestTarget;
-                        car.GetComponent<CarTargetSelect>().target = closestTarget;
-                        car.target = closestTarget;
+                        GameObject closestTarget;
+                        if (errorList.Count > 0)
+                        {
+                            closestTarget = GetDistance(errorList, car);
+                        }
+                        else
+                        {
+                            closestTarget = GetDistance(buildingsWithEvents, car);
+                        }
+                        car.GetComponent<AICharacterControl>().Target = closestTarget.GetComponent<Transform>();
                     }
                 }
             }
-            timer -= 3.0f;
+            timer -= 1.0f;
         }
         
 	}
 
-
-
-    private Transform GetDistance(List<GameObject> eventBuildings, CarTargetSelect car)
+    private List<GameObject> CheckForErrorWait(List<GameObject> buildings)
     {
-        /*
-        float[] distanceArray = new float[targets.Count];
-        GameObject[] builds = new GameObject[targets.Count];
-
-        NavMeshPath path = new NavMeshPath();
-        for (int i = 0; i < targets.Count; i++)
+        List<GameObject> errorList = new List<GameObject>();
+        foreach (GameObject build in buildings)
         {
-            NavMesh.CalculatePath(transform.position, targets[i].GetComponent<Transform>().position, NavMesh.AllAreas, path);
-            car.agent.SetPath(path);
-            car.agent.isStopped = true;
-            Debug.Log(car.agent.remainingDistance.ToString() + " remDist");
-            distanceArray[i] = car.agent.remainingDistance;
-            builds[i] = targets[i];
+            if (build.GetComponent<Building>().currentStatus == Building.Status.ErrorWait)
+            {
+                errorList.Add(build);
+            }
         }
-        int shortestIndex = MinValue(distanceArray);
-        car.agent.isStopped = false;
-        Debug.Log(shortestIndex);
-        return builds[shortestIndex].GetComponent<Transform>();
-        */
+        return errorList;
+    }
 
 
+
+    private GameObject GetDistance(List<GameObject> eventBuildings, CarTargetSelect car)
+    {
         float[] distanceArray = new float[eventBuildings.Count];
         GameObject[] builds = new GameObject[eventBuildings.Count];
 
@@ -90,14 +78,12 @@ public class AIManager : MonoBehaviour {
         foreach (GameObject eventBuilding in eventBuildings)
         {
             float temp = Vector3.Distance(eventBuilding.transform.position, car.transform.position);
-            Debug.Log(temp.ToString());
             distanceArray[i] = temp;
             builds[i] = eventBuilding;
             i++;
         }
         int shortestIndex = MinValue(distanceArray);
-        Debug.Log(shortestIndex.ToString() + " index");
-        return builds[shortestIndex].GetComponent<Transform>();
+        return builds[shortestIndex];
     }
 
 

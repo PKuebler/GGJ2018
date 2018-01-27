@@ -7,11 +7,11 @@ public class Timer : MonoBehaviour {
 	public HQ player_hq;
 	public HQ ai_hq;
 
-	public float moneyTimeLeft = 40.0f;
-	private float timeBetweenMoney = 20.0f;
+	public float moneyTimeLeft = 20.0f;
+	private float timeBetweenMoney = 5.0f;
 
 	public float timeLeft = 30.0f;
-	private float timeBetweenEvents = 10.0f;
+	private float timeBetweenEvents = 5.0f;
 		
 	// Use this for initialization
 	void Start () {
@@ -37,8 +37,21 @@ public class Timer : MonoBehaviour {
 		moneyTimeLeft -= Time.deltaTime;
 		if (moneyTimeLeft < 0) 
 		{
-			player_hq.GetMoney ();
-			//ai_hq.GetMoney ();
+			float moneyAI = 0;
+			float moneyPlayer = 0;
+
+			foreach (GameObject obj in childs) {
+				Building building = obj.GetComponent<Building> ();
+
+				moneyAI += building.moneyAI;
+				moneyPlayer += building.moneyPlayer;
+
+				building.moneyAI = 0;
+				building.moneyPlayer = 0;
+			}
+
+			player_hq.SetMoney (moneyPlayer);
+			ai_hq.SetMoney (moneyPlayer);
 			moneyTimeLeft = timeBetweenMoney;
 		}
 	}
@@ -50,6 +63,6 @@ public class Timer : MonoBehaviour {
 			PickBuilding ();
             return;
 		}
-		randomObject.GetComponent<Building>().SetAction ();
+		randomObject.GetComponent<Building>().SetEvent ();
 	}
 }

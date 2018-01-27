@@ -25,10 +25,10 @@ public class Building : MonoBehaviour {
     private AIManager aihq;
 
 	// config
-	private float connectionDuration = 30.0f; // Anschluss Arbeitsdauer
-	private float errorDuration = 30.0f; // Fehlerbehebung Arbeitsdauer
-	private float connectionMaxWaitingTime = 60.0f; // Maximale Wartezeit auf Techniker
-	private float errorMaxWaitingTime = 30.0f; // Maximale Wartezeit auf Techniker
+	private float connectionDuration = 15.0f; // Anschluss Arbeitsdauer
+	private float errorDuration = 15.0f; // Fehlerbehebung Arbeitsdauer
+	private float connectionMaxWaitingTime = 40.0f; // Maximale Wartezeit auf Techniker
+	private float errorMaxWaitingTime = 20.0f; // Maximale Wartezeit auf Techniker
 
 	// state
 	private GameObject icon;
@@ -37,8 +37,9 @@ public class Building : MonoBehaviour {
 	public GameObject currentCar;
 	public bool isDebug = false; // log debug
 
-	// Cars At Building Colider
-	public List<GameObject> TriggerCars = new List<GameObject>();
+	// collect money
+	public float moneyAI = 0;
+	public float moneyPlayer = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -47,8 +48,96 @@ public class Building : MonoBehaviour {
         owner = Owner.NoOne;
 	}
 
+	// Auto Checkin
+	// true => Arbeitet schon hier, arbeitet jetzt hier
+	// false => Besetzt
+	public bool CheckIn(GameObject car) {
+        // only cars
+        Debug.Log("auto eingecheckt");
+        if (!car.CompareTag("Auto") && !car.CompareTag("AIAuto")) {
+			debugMessage (car, "CheckIn", "Heute nur Autos!");
+			return false;
+		}
+
+		debugMessage (car, "CheckIn", "Hallo, lass mich deine Daten überprüfen!");
+
+		// arbeitet dieses auto hier schon?
+		if (currentCar == car) {
+			debugMessage (car, "CheckIn", "Du arbeitest doch gerade schon hier!");
+			return true;
+		}
+
+		debugMessage (car, "CheckIn", "Du arbeitest hier noch nicht!");
+
+		// wartet haus auf ein auto?
+		if (currentStatus != Status.ConnectionWait && currentStatus != Status.ErrorWait) {
+			debugMessage (car, "CheckIn", "Zum Glück gerade keine Probleme... Sry.");
+			return false;
+		}
+
+		debugMessage (car, "CheckIn", "Gut das du kommst, hier brennt die Hütte!");
+
+		// gehört das haus evtl einem anderen spieler?
+		if (owner != Owner.NoOne && owner != (car.tag == "AIAuto" ? Owner.AI : Owner.Player)) {
+			// informiere auto, das dieses haus wem anders gehört
+			debugMessage (car, "CheckIn", "Dieses Haus gehört leider einem anderen Team!");
+			return false;
+		}
+
+		debugMessage (car, "CheckIn", "Dieses Haus gehört deinem Team oder niemandem!");
+
+		// Fange an zu arbeiten!
+		if (currentStatus == Status.ConnectionWait) {
+			SetStatusConnectionProgress (car);
+		} else if (currentStatus == Status.ErrorWait) {
+			SetStatusErrorProgress(car);
+		}
+
+		// sage auto bescheid
+		debugMessage (car, "CheckIn", "Auto beginnt mit der arbeit!");
+		return true;
+	}
+
+	// Auto Checkout
+	public bool CheckOut(GameObject car) {
+		// only cars
+		if (!car.CompareTag("Auto") && !car.CompareTag("AIAuto")) {
+			debugMessage (car, "CheckOut", "Heute nur Autos!");
+			return false;
+		}
+
+		debugMessage (car, "CheckOut", "Auto möchte auschecken!");
+
+		// arbeitet dieses auto hier überhaupt?
+		if (currentCar != car) {
+			debugMessage (car, "CheckOut", "Dieses Auto hat hier nicht gearbeitet!");
+			return false;
+		}
+
+		debugMessage (car, "CheckOut", "Auto hat hier gearbeitet!");
+
+		// update haus prozess, currentCar wird automatisch auf null gesetzt
+		if (currentStatus == Status.ConnectionProgress) {
+			SetStatusConnectionWait ();
+		} else if (currentStatus == Status.ErrorProgress) {
+			SetStatusErrorWait ();
+		}
+
+		debugMessage (car, "CheckOut", "Im Haus arbeitet nun keiner mehr");
+		return true;
+	}
+
 	// Update is called once per frame
 	void Update () {
+		// geld
+		if (currentStatus == Status.Connection) {
+			if (owner == Owner.AI) {
+				moneyAI += Time.deltaTime;
+			} else if (owner == Owner.Player) {
+				moneyPlayer += Time.deltaTime;
+			}
+		}
+
 		// wartet auf nix?
 		if (currentStatus == Status.Nothing || currentStatus == Status.Connection) {
 			return;
@@ -86,7 +175,7 @@ public class Building : MonoBehaviour {
 
 	// Timer triggert diese Aktion
 	// Checkt welche Eintritt
-	public void SetAction() {
+	public void SetEvent() {
 		if (currentStatus == Status.Nothing) {
 			SetStatusConnectionWait ();
 		} else if (currentStatus == Status.Connection) {
@@ -118,134 +207,6 @@ public class Building : MonoBehaviour {
 		}
 	}
 
-	// objekt betritt den collider
-    void OnTriggerEnter(Collider other)
-    {
-		// only cars
-		if (!other.CompareTag("Auto") && !other.CompareTag("AIAuto")) {
-			return;
-		}
-
-		GameObject car = other.gameObject;
-		// füge auto in liste von autos im collider
-		if (!TriggerCars.Contains(car)) {
-			TriggerCars.Add(car);
-		}
-
-		debugMessage (car, "OnEnter", "enter");
-
-		CheckTriggerEnter (car);
-    }
-
-	// wird beim austritt des aktuellen workers gegen alle im collider gefahren um zu schauen ob wer wartet
-	private bool CheckTriggerEnter(GameObject car) {
-		// arbeitet dieses auto hier schon?
-		if (currentCar == car) {
-			debugMessage (car, "CheckTrigger", "auto arbeitet hier bereits!");
-			return true;
-		}
-
-		debugMessage (car, "CheckTrigger", "auto arbeitet hier noch nicht!");
-
-		// get target from car
-		Transform target = car.GetComponent<CarTargetSelect> ().target;
-
-		// gibt es kein ziel oder ist das ziel nicht dieses gebäude?
-		if (!target || target != transform) {
-			debugMessage (car, "CheckTrigger", "auto hat kein oder ein anderes ziel!");
-			return false;
-		}
-
-		debugMessage (car, "CheckTrigger", "auto hat dieses ziel!");
-
-		// wartet haus auf ein auto?
-		if (currentStatus != Status.ConnectionWait && currentStatus != Status.ErrorWait) {
-			// informiere auto, das es hier nicht gebraucht wird
-			car.GetComponent<CarTargetSelect> ().ReachedTarget (this.gameObject, false);
-
-			debugMessage (car, "CheckTrigger", "warte nicht auf auto, auto wurde darüber informiert!");
-			return false;
-		}
-
-		debugMessage (car, "CheckTrigger", "auto kann hier arbeiten!");
-
-		// gehört das haus evtl einem anderen spieler?
-		if (owner != Owner.NoOne && owner != (car.tag == "AIAuto" ? Owner.AI : Owner.Player)) {
-			// informiere auto, das dieses haus wem anders gehört
-			car.GetComponent<CarTargetSelect> ().ReachedTarget (this.gameObject, false);
-
-			debugMessage (car, "CheckTrigger", "auto vom falschen team!");
-			return false;
-		}
-
-		debugMessage (car, "CheckTrigger", "auto ist willkommen!");
-
-		// auto will zu diesem gebäude, das gebäude wartet noch und alles andere ist auch geil
-		if (currentStatus == Status.ConnectionWait) {
-			SetStatusConnectionProgress (car);
-		} else if (currentStatus == Status.ErrorWait) {
-			SetStatusErrorProgress(car);
-		}
-
-		// sage auto bescheid
-		car.GetComponent<CarTargetSelect> ().ReachedTarget (this.gameObject, true);
-
-		debugMessage (car, "CheckTrigger", "auto ist informiert!");
-
-		return true;
-	}
-
-	void OnTriggerExit(Collider other)
-	{
-    	// only cars
-    	if (!other.CompareTag("Auto") && !other.CompareTag("AIAuto")) {
-    		return;
-    	}
-
-    	GameObject car = other.gameObject;
-
-		// entferne auto aus liste von autos im collider
-		if (TriggerCars.Contains(car)) {
-			TriggerCars.Remove(car);
-		}
-
-		debugMessage (car, "OnExit", "auto fährt =(");
-
-		// arbeitet dieses auto hier überhaupt?
-		if (currentCar != car) {
-			debugMessage (car, "OnExit", "auto hat hier nicht gearbeitet!");
-			return;
-		}
-
-		debugMessage (car, "OnExit", "auto hat hier gearbeitet!");
-
-		// wird dieses haus überhaupt gerade von einem techniker versorgt?
-		if (currentStatus != Status.ConnectionProgress && currentStatus != Status.ErrorProgress) {
-			debugMessage (car, "OnExit", "haus brauchte keinen arbeiter");
-			return;
-		}
-
-		debugMessage (car, "OnExit", "haus brauchte arbeiter");
-
-		// update haus prozess
-		if (currentStatus == Status.ConnectionProgress) {
-			SetStatusConnectionWait ();
-		} else if (currentStatus == Status.ErrorProgress) {
-			SetStatusErrorWait ();
-		}
-
-		debugMessage (car, "OnExit", "haus arbeitet nun nicht mehr");
-
-		// ist ein anderes auto in der nähe, das hier arbeiten könnte?
-		foreach(GameObject otherCar in TriggerCars) {
-			// eins gefunden?
-			if (CheckTriggerEnter (otherCar)) {
-				debugMessage (car, "OnExit", "anderes auto übernimmt: " + otherCar.name);
-				return;
-			}
-		}
-	}
-
 	public void SetStatusToDebug() {
 		switch (currentStatus) {
 			case Status.Nothing:
@@ -273,12 +234,13 @@ public class Building : MonoBehaviour {
 	public void SetStatusNothing() {
 		// falls auto arbeitete, informiere es, das es nicht mehr benötigt wird.
 		if (currentCar) {
-			currentCar.GetComponent<CarTargetSelect> ().ReachedTarget (this.gameObject, false);
+			currentCar.GetComponent<CarTargetSelect>().EventComplete ();
 		}
 
 		statusTimer = 0;
 		currentCar = null;
 		currentStatus = Status.Nothing;
+		owner = Owner.NoOne;
 
 		// informiere ki das dieses objekt keinen techniker mehr braucht
 		if (aihq) {
@@ -292,12 +254,13 @@ public class Building : MonoBehaviour {
 	public void SetStatusConnectionWait() {
 		// falls auto arbeitete, informiere es, das es nicht mehr benötigt wird.
 		if (currentCar) {
-			currentCar.GetComponent<CarTargetSelect> ().ReachedTarget (this.gameObject, false);
+			currentCar.GetComponent<CarTargetSelect>().EventComplete ();
 		}
 
 		statusTimer = connectionMaxWaitingTime;
 		currentCar = null;
 		currentStatus = Status.ConnectionWait;
+		owner = Owner.NoOne;
 
 		// informiere ki das dieses objekt einen techniker braucht
 		if (aihq) {
@@ -311,11 +274,12 @@ public class Building : MonoBehaviour {
 	public void SetStatusConnectionProgress(GameObject car) {
 		// falls auto arbeitete, informiere es, das es nicht mehr benötigt wird.
 		if (currentCar) {
-			currentCar.GetComponent<CarTargetSelect> ().ReachedTarget (this.gameObject, false);
+			currentCar.GetComponent<CarTargetSelect>().EventComplete ();
 		}
 
 		statusTimer = connectionDuration;
 		currentStatus = Status.ConnectionProgress;
+		owner = Owner.NoOne;
 
 		// neues auto
 		currentCar = car;
@@ -334,7 +298,7 @@ public class Building : MonoBehaviour {
 
 		// informiere auto, das es fertig ist!
 		if (currentCar) {
-			currentCar.GetComponent<CarTargetSelect> ().ReachedTarget (this.gameObject, false);
+			currentCar.GetComponent<CarTargetSelect>().EventComplete ();
 		}
 
 		debugMessage (currentCar, "SetStatusConnection", "Updated");
@@ -348,7 +312,7 @@ public class Building : MonoBehaviour {
 	public void SetStatusErrorWait() {
 		// falls auto arbeitete, informiere es, das es nicht mehr benötigt wird.
 		if (currentCar) {
-			currentCar.GetComponent<CarTargetSelect> ().ReachedTarget (this.gameObject, false);
+			currentCar.GetComponent<CarTargetSelect>().EventComplete ();
 		}
 
 		statusTimer = errorMaxWaitingTime;
@@ -368,7 +332,7 @@ public class Building : MonoBehaviour {
 	public void SetStatusErrorProgress(GameObject car) {
 		// falls auto arbeitete, informiere es, das es nicht mehr benötigt wird.
 		if (currentCar) {
-			currentCar.GetComponent<CarTargetSelect> ().ReachedTarget (this.gameObject, false);
+			currentCar.GetComponent<CarTargetSelect>().EventComplete ();
 		}
 
 		statusTimer = errorDuration;

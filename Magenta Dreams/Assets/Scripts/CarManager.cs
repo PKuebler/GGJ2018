@@ -7,16 +7,30 @@ public class CarManager : MonoBehaviour {
 
     [SerializeField]
     private GameObject selectedObject;
+    private HQ playerHQ;
 
     // Use this for initialization
     void Start()
     {
-	
+        playerHQ = GameObject.FindGameObjectWithTag("HQ").GetComponent<HQ>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyUp("1"))
+        {
+            if (playerHQ.carList.Count >= 1)
+            {
+                if (selectedObject != null)
+                {
+                    selectedObject.GetComponent<CarTargetSelect>().part.Stop();
+                }
+                selectedObject = playerHQ.carList[0];
+                selectedObject.GetComponent<CarTargetSelect>().part.Play();
+            }
+        }
+        
         //1. Nicht selektiert: wenn Auto: selected = Auto
         //2. Auto selektiert: a) wenn Haus: Ziel / b) wenn neues Auto: neues Auto = selected / c) wenn nichts: selected = nichts
         if (Input.GetMouseButtonDown(0))
@@ -36,12 +50,23 @@ public class CarManager : MonoBehaviour {
                     }
                 }
                 //2. Fall: Auto selektiert
-                //2a) Haus selktiert
+                //2a) Haus selektiert
                 else if (hit.transform.tag == "Haus")
                 {
-                    selectedObject.GetComponent<AICharacterControl>().Target = hit.transform;
-                    selectedObject.GetComponent<AICharacterControl>().ReachedTarget = false;
-					selectedObject.GetComponent<CarTargetSelect>().target = hit.transform;
+                    //ist das haus schon das ziel?
+                    if (hit.transform != selectedObject.GetComponent<AICharacterControl>().Target)
+                    {
+                        //arbeite ich gerade?
+                        if (selectedObject.GetComponent<CarTargetSelect>().Working)
+                        {
+                            Debug.Log("target: " + selectedObject.GetComponent<CarTargetSelect>().RecentBuilding.name);
+                            Debug.Log("selected: " + selectedObject.name);
+                            selectedObject.GetComponent<CarTargetSelect>().RecentBuilding.CheckOut(selectedObject.gameObject);
+                        }
+                        selectedObject.GetComponent<AICharacterControl>().Target = hit.transform;
+                        selectedObject.GetComponent<AICharacterControl>().ReachedTarget = false;
+                        selectedObject.GetComponent<CarTargetSelect>().Working = false;
+                    }
                 }
                 //2b) Neues Auto selektiert
                 else if (hit.transform.tag == "Auto")
