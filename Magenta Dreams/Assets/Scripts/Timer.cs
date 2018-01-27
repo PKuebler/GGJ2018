@@ -51,7 +51,7 @@ public class Timer : MonoBehaviour {
 			}
 
 			player_hq.SetMoney (moneyPlayer);
-			ai_hq.SetMoney (moneyPlayer);
+			ai_hq.SetMoney (moneyAI);
 			moneyTimeLeft = timeBetweenMoney;
 		}
 	}
