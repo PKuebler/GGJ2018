@@ -28,7 +28,7 @@ public class Building : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+		updateColor ();
 	}
 
 	// Update is called once per frame
@@ -58,6 +58,7 @@ public class Building : MonoBehaviour {
 				statusTimer = 0;
 
 				updateIcon ();
+				updateColor ();
 			}
 		}
 	}
@@ -73,6 +74,7 @@ public class Building : MonoBehaviour {
 			statusTimer = errorMaxWaitingTime;
 		}
 		updateIcon ();
+		updateColor ();
 	}
 
 	private void updateIcon() {
@@ -82,8 +84,17 @@ public class Building : MonoBehaviour {
 			icon.transform.parent = gameObject.transform;
 			icon.transform.position = gameObject.transform.position - new Vector3 (0, -(gameObject.transform.localScale.y * 2), 0);
 			icon.transform.localScale = new Vector3 (0.5f, 0.5f, 0.5f);
+			icon.GetComponent<Renderer>().material.color = new Color(0,1,0,1);
 		} else if (currentStatus == Status.Nothing || currentStatus == Status.Connection) {
 			Destroy (icon);
+		}
+	}
+
+	private void updateColor() {
+		if (currentStatus == Status.Connection || currentStatus == Status.ErrorProgress || currentStatus == Status.ErrorWait) {
+			gameObject.GetComponent<Renderer> ().material.color = Color.magenta;
+		} else {
+			gameObject.GetComponent<Renderer>().material.color = Color.grey;
 		}
 	}
 
