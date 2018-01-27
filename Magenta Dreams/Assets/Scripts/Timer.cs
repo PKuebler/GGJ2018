@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour {
 	private GameObject[] childs;
+	public HQ player_hq;
+	public HQ ai_hq;
+
+	public float moneyTimeLeft = 40.0f;
+	private float timeBetweenMoney = 20.0f;
+
 	public float timeLeft = 30.0f;
 	private float timeBetweenEvents = 10.0f;
-
+		
 	// Use this for initialization
 	void Start () {
 		childs = GameObject.FindGameObjectsWithTag ("Haus");
-
+//		player_hqs = GameObject.FindGameObjectsWithTag ("HQ");
+//		ai_hqs = GameObject.FindGameObjectsWithTag ("AIHQ");
 
 		// set start timer
 		timeLeft = timeBetweenEvents;
@@ -22,6 +29,17 @@ public class Timer : MonoBehaviour {
 		if ( timeLeft < 0 ) {
 			PickBuilding ();
 			timeLeft = timeBetweenEvents;
+		}
+	}
+
+	void FixedUpdate()
+	{
+		moneyTimeLeft -= Time.deltaTime;
+		if (moneyTimeLeft < 0) 
+		{
+			player_hq.GetMoney ();
+			//ai_hq.GetMoney ();
+			moneyTimeLeft = timeBetweenMoney;
 		}
 	}
 
