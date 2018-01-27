@@ -110,8 +110,19 @@ public class Building : MonoBehaviour {
         //dort wird verglichen, ob es der Trigger vom Ziel des Autos war
         //- wenn ja: Stoppen
         //- wenn nein: weiterfahren
-        if ((other.CompareTag("Auto") && owner == Owner.Player) || (other.CompareTag("AIAuto") && owner == Owner.AI))
+				if (other.CompareTag("Auto") || other.CompareTag("AIAuto"))
         {
+			// nur eigene gebäude bei error
+			if (currentStatus == Status.ErrorWait) {
+				if (other.CompareTag ("Auto") && owner != Owner.Player) {
+					// ignore event
+					return;
+				} else if (other.CompareTag ("AIAuto") && owner != Owner.AI) {
+					// ignore event
+					return;
+				}
+			}
+
 			// Transform target = other.gameObject.GetComponent<AICharacterControl> ().Target;
 			Transform target = other.gameObject.GetComponent<CarTargetSelect> ().target;
 			// Dieses Gebäude Ziel?
