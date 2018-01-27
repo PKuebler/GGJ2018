@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour {
 
     public float moveSpeed = 10.0f;
-    public float turnSpeed = 4.0f;      // Speed of camera turning when mouse moves in along an axis
+    public float turnSpeed = 6.0f;      // Speed of camera turning when mouse moves in along an axis
     public float zoomSpeed = 2.0f;      // Speed of the camera going back and forth
     private Vector3 mouseOrigin;    // Position of cursor when mouse dragging starts
     private bool isRotating;    // Is the camera being rotated?
