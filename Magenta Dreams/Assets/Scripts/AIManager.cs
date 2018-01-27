@@ -8,6 +8,7 @@ public class AIManager : MonoBehaviour {
 
     [SerializeField]
     private List<CarTargetSelect> carList;
+    public List<CarTargetSelect> CarList { get { return carList; } }
     [SerializeField]
     private List<GameObject> buildingsWithEvents;
 
