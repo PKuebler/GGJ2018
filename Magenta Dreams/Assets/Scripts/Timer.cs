@@ -30,6 +30,7 @@ public class Timer : MonoBehaviour {
 		Transform randomObject = childs[Random.Range(0,childs.Length)];
 		if (!randomObject) {
 			PickBuilding ();
+            return;
 		}
 		randomObject.GetComponent<Building>().SetAction ();
 	}

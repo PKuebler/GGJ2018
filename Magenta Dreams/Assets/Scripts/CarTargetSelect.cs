@@ -31,23 +31,10 @@ public class CarTargetSelect : MonoBehaviour {
 
     public void EventFinished()
     {
+        if (GetComponent<AICharacterControl>().Target == null)
+        {
+            GetComponent<AICharacterControl>().Target = hq;
+        }
         working = false;
-    }
-
-    void OnTriggerEnter (Collider other)
-    {
-        if (other.gameObject.CompareTag("HQ") && !waitingAtHQ)
-        {
-            GetComponent<AICharacterControl>().Target = null;
-            waitingAtHQ = true;
-        }
-    }
-
-    void OnTriggerLeave (Collider other)
-    {
-        if (other.gameObject.CompareTag("HQ"))
-        {
-            waitingAtHQ = false;
-        }
     }
 }
