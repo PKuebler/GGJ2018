@@ -1,22 +1,74 @@
 fileFormatVersion: 2
-guid: 168e57034f2cf4b7a9b6bcacc13461f0
-timeCreated: 1517046022
+guid: eb619c93bbb88416e93a1a58d101527e
+timeCreated: 1517059949
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2100000: white_Stripes
-    2100002: Street
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Plane_058
+    100000: Building_A
+    100002: Building_B
+    100004: //RootNode
+    100006: SunBench
+    100008: SunBench_001
+    100010: SunBench_002
+    100012: SunBench_003
+    100014: SunBench_004
+    100016: Tree
+    100018: Umbrella
+    400000: Building_A
+    400002: Building_B
+    400004: //RootNode
+    400006: SunBench
+    400008: SunBench_001
+    400010: SunBench_002
+    400012: SunBench_003
+    400014: SunBench_004
+    400016: Tree
+    400018: Umbrella
+    2100000: Building_White
+    2100002: Building_gray
+    2100004: Building_yellow
+    2100006: Building_red
+    2100008: Building_brown
+    2100010: Glass
+    2100012: Building_green
+    2100014: Building_BLue
+    2100016: Building_dark_green
+    2100018: unnamed
+    2100020: Umbrella_white
+    2100022: Umbrella_red
+    2300000: Building_A
+    2300002: Building_B
+    2300004: SunBench
+    2300006: SunBench_001
+    2300008: SunBench_002
+    2300010: SunBench_003
+    2300012: SunBench_004
+    2300014: Tree
+    2300016: Umbrella
+    3300000: Building_A
+    3300002: Building_B
+    3300004: SunBench
+    3300006: SunBench_001
+    3300008: SunBench_002
+    3300010: SunBench_003
+    3300012: SunBench_004
+    3300014: Tree
+    3300016: Umbrella
+    4300000: Building_B
+    4300002: Tree
+    4300004: SunBench_004
+    4300006: SunBench_003
+    4300008: Building_A
+    4300010: SunBench_002
+    4300012: SunBench_001
+    4300014: SunBench
+    4300016: Umbrella
     7400000: Default Take
     9500000: //RootNode
   externalObjects: {}
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -52,7 +104,7 @@ ModelImporter:
     importCameras: 1
     importLights: 1
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
@@ -69,7 +121,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-  importAnimation: 1
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2
@@ -85,10 +137,10 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
