@@ -6,10 +6,14 @@ public class AIManager : MonoBehaviour {
 
     public GameObject car;
     private List<GameObject> carList;
-    public List<GameObject> BuildingsWithEvents { get; set; }
+    private List<GameObject> buildingsWithEvents;
 
 	// Use this for initialization
 	void Start () {
+        carList = new List<GameObject>();
+        buildingsWithEvents = new List<GameObject>();
+
+        Debug.Log(car);
         carList.Add(car);
 	}
 	
@@ -20,12 +24,12 @@ public class AIManager : MonoBehaviour {
 
     public void AddEvent (GameObject building)
     {
-        BuildingsWithEvents.Add(building);
+        buildingsWithEvents.Add(building);
     }
 
     public void RemoveEvent (GameObject building)
     {
-        BuildingsWithEvents.Remove(building);
+        buildingsWithEvents.Remove(building);
     }
 
     public void AddCar (GameObject car)
