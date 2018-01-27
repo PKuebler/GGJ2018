@@ -1544,7 +1544,7 @@ Prefab:
       objectReference: {fileID: 2100000, guid: b7ccbf2fef2695a47b7fe0831e6ea236, type: 2}
     - target: {fileID: 1465705011995718, guid: b89c23a49f37010439286ac19540dc91, type: 2}
       propertyPath: m_TagString
-      value: HQ
+      value: AIHQ
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114979971088098042, guid: b89c23a49f37010439286ac19540dc91, type: 2}
@@ -1571,7 +1571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8ede3d06073a41a284ae8fbc9bb9bf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carPrefab: {fileID: 1615334730870674, guid: c4f0e7e6824c8094f8cad13db4656208, type: 2}
+  carPrefab: {fileID: 1615334730870674, guid: b6e389d5554b0454eade5f21f9941f8e, type: 2}
 --- !u!1001 &1707931872
 Prefab:
   m_ObjectHideFlags: 0
