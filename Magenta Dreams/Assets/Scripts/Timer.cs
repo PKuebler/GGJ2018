@@ -11,7 +11,6 @@ public class Timer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		childs = rootBuildings.GetComponentsInChildren<Transform>();
-		PickBuilding();
 
 		// set start timer
 		timeLeft = timeBetweenEvents;
@@ -29,7 +28,9 @@ public class Timer : MonoBehaviour {
 	// Get random Building
 	void PickBuilding() {
 		Transform randomObject = childs[Random.Range(0,childs.Length)];
-		print (randomObject.name);
+		if (!randomObject) {
+			PickBuilding ();
+		}
 		randomObject.GetComponent<Building>().SetAction ();
 	}
 }
