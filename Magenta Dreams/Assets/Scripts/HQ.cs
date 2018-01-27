@@ -8,6 +8,7 @@ using UnityStandardAssets.Characters.ThirdPerson;
 public class HQ : MonoBehaviour 
 {
 	public GameObject carPrefab;
+	private int contractPay;
 	private int money;
 	private int carPrice;
 	private GameObject[] carArray;
@@ -21,9 +22,15 @@ public class HQ : MonoBehaviour
 
 		InitStats ();
 
-		Building testBuilding = new Building ();
-		testBuilding.currentStatus = Building.Status.Connection;
-		GetBuilding (testBuilding);
+		// Test Gebäude für die Einnahmen
+		Building testBuilding0 = new Building ();
+		testBuilding0.currentStatus = Building.Status.Connection;
+		GetBuilding (testBuilding0);
+
+		Building testBuilding1 = new Building ();
+		testBuilding1.currentStatus = Building.Status.Connection;
+		GetBuilding (testBuilding1);
+
 
 	}
 	
@@ -37,6 +44,7 @@ public class HQ : MonoBehaviour
 	public void BuyCars ()
 	{
 		int numbersOfCars = 1;
+		GetMoney ();
 
 		if( (numbersOfCars * carPrice) <= money)
 		{
@@ -68,7 +76,14 @@ public class HQ : MonoBehaviour
 
 	public void GetMoney()
 	{
-		
+		foreach(Building building in buildingList)
+		{
+			if (building.currentStatus == Building.Status.Connection)
+			{
+				money = money + contractPay;
+			}
+		}
+
 	}
 
 	#region Trigger
@@ -103,8 +118,9 @@ public class HQ : MonoBehaviour
 	void InitStats()
 	{
 		// HQ Stats
-		money = 1100;
+		money = 100;
 		carPrice = 100;
+		contractPay = 5;
 
 		rotation = new Quaternion (0, 0, 0, 0);
 
