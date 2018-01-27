@@ -7,16 +7,30 @@ public class CarManager : MonoBehaviour {
 
     [SerializeField]
     private GameObject selectedObject;
+    private HQ playerHQ;
 
     // Use this for initialization
     void Start()
     {
-	
+        playerHQ = GameObject.FindGameObjectWithTag("HQ").GetComponent<HQ>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyUp("1"))
+        {
+            if (playerHQ.carList.Count >= 1)
+            {
+                if (selectedObject != null)
+                {
+                    selectedObject.GetComponent<CarTargetSelect>().part.Stop();
+                }
+                selectedObject = playerHQ.carList[0];
+                selectedObject.GetComponent<CarTargetSelect>().part.Play();
+            }
+        }
+        
         //1. Nicht selektiert: wenn Auto: selected = Auto
         //2. Auto selektiert: a) wenn Haus: Ziel / b) wenn neues Auto: neues Auto = selected / c) wenn nichts: selected = nichts
         if (Input.GetMouseButtonDown(0))

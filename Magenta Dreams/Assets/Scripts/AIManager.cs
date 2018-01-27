@@ -12,6 +12,8 @@ public class AIManager : MonoBehaviour {
     private List<GameObject> buildingsWithEvents;
 
     private float timer;
+    private int money;
+    private HQ aihq;
 
 
 	// Use this for initialization
@@ -19,6 +21,7 @@ public class AIManager : MonoBehaviour {
         carList = new List<CarTargetSelect>();
         buildingsWithEvents = new List<GameObject>();
         timer = 0.0f;
+        aihq = GetComponent<HQ>();
 	}
 	
 	// Update is called once per frame
@@ -50,7 +53,14 @@ public class AIManager : MonoBehaviour {
             }
             timer -= 1.0f;
         }
-        
+
+        if (aihq.Money > aihq.CarPrice)
+        {
+            Debug.Log("AI-Konto: " + aihq.Money.ToString());
+            Debug.Log("Muahahaha, ein weiteres Auto!");
+            aihq.AIBuyCars();
+            Debug.Log("AI-Konto: " + aihq.Money.ToString());
+        }
 	}
 
     private List<GameObject> CheckForErrorWait(List<GameObject> buildings)
@@ -78,13 +88,11 @@ public class AIManager : MonoBehaviour {
         foreach (GameObject eventBuilding in eventBuildings)
         {
             float temp = Vector3.Distance(eventBuilding.transform.position, car.transform.position);
-            Debug.Log(temp.ToString());
             distanceArray[i] = temp;
             builds[i] = eventBuilding;
             i++;
         }
         int shortestIndex = MinValue(distanceArray);
-        Debug.Log(shortestIndex.ToString() + " index");
         return builds[shortestIndex];
     }
 
@@ -107,7 +115,6 @@ public class AIManager : MonoBehaviour {
 
     private int MinValue(float[] distances)
     {
-        Debug.Log("floats: " + distances.Length.ToString());
         float min = 100.0f;
         int index = -1;
         for (int i = 0; i < distances.Length; i++)
@@ -116,7 +123,6 @@ public class AIManager : MonoBehaviour {
             {
                 min = distances[i];
                 index = i;
-                Debug.Log("min: " + min.ToString());
             }
         }
         return index;

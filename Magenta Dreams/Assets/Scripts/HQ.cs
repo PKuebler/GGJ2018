@@ -11,11 +11,13 @@ public class HQ : MonoBehaviour
 	public bool isPlayer; 
 
 	private int contractPay;
-	public int money;
-	public int cars;
+    [SerializeField]
+	private int money;
+    public int Money { get { return money; } }
 	private int carPrice;
+    public int CarPrice { get { return carPrice; } }
 	private GameObject[] carArray;
-	private List<GameObject> carList;
+	public List<GameObject> carList;
 	private Quaternion rotation;
 
 	// Use this for initialization
@@ -27,7 +29,7 @@ public class HQ : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		cars = carList.Count;
+
 	}
 		
 	// Buy a Car -- int numbersOfCars
@@ -53,6 +55,14 @@ public class HQ : MonoBehaviour
 		}
 	}
 
+    public void AIBuyCars()
+    {
+        Vector3 postition = new Vector3(this.transform.position.x + (1.0f), this.transform.position.y, this.transform.position.z);
+        GameObject newCar = Instantiate(carPrefab, postition, rotation, this.transform);
+        GetComponent<AIManager>().AddCar(newCar);
+        money = money - carPrice;
+    }
+
 	void OnGUI ()
 	{
 		GUI.Label (new Rect (0, 100, 200, 50), "Funds: " + money.ToString () + "\nCars: " + carList.Count.ToString() );
@@ -75,7 +85,7 @@ public class HQ : MonoBehaviour
 
 		// Setzen der Autos die bei Spielstart zum HQ gehören
 		carList = new List<GameObject>();
-		carArray = GameObject.FindGameObjectsWithTag("Auto");
+		carArray = GameObject.FindGameObjectsWithTag("Auto"); 
 
 		for (int i = 0; i < carArray.Length; i++) 
 		{

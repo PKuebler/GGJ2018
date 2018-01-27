@@ -52,8 +52,9 @@ public class Building : MonoBehaviour {
 	// true => Arbeitet schon hier, arbeitet jetzt hier
 	// false => Besetzt
 	public bool CheckIn(GameObject car) {
-		// only cars
-		if (!car.CompareTag("Auto") && !car.CompareTag("AIAuto")) {
+        // only cars
+        Debug.Log("auto eingecheckt");
+        if (!car.CompareTag("Auto") && !car.CompareTag("AIAuto")) {
 			debugMessage (car, "CheckIn", "Heute nur Autos!");
 			return false;
 		}
@@ -239,6 +240,7 @@ public class Building : MonoBehaviour {
 		statusTimer = 0;
 		currentCar = null;
 		currentStatus = Status.Nothing;
+		owner = Owner.NoOne;
 
 		// informiere ki das dieses objekt keinen techniker mehr braucht
 		if (aihq) {
@@ -258,6 +260,7 @@ public class Building : MonoBehaviour {
 		statusTimer = connectionMaxWaitingTime;
 		currentCar = null;
 		currentStatus = Status.ConnectionWait;
+		owner = Owner.NoOne;
 
 		// informiere ki das dieses objekt einen techniker braucht
 		if (aihq) {
@@ -276,6 +279,7 @@ public class Building : MonoBehaviour {
 
 		statusTimer = connectionDuration;
 		currentStatus = Status.ConnectionProgress;
+		owner = Owner.NoOne;
 
 		// neues auto
 		currentCar = car;
