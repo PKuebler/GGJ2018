@@ -39,6 +39,7 @@ public class CarManager : MonoBehaviour {
                 else if (hit.transform.tag == "Haus")
                 {
                     selectedObject.GetComponent<AICharacterControl>().Target = hit.transform;
+                    selectedObject.GetComponent<AICharacterControl>().ReachedTarget = false;
                 }
                 //2b) Neues Auto selektiert
                 else if (hit.transform.tag == "Auto")
