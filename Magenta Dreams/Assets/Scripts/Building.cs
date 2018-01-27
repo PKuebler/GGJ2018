@@ -144,6 +144,9 @@ public class Building : MonoBehaviour {
 	}
 
 	public void SetStatusToDebug() {
+		if (aihq) {
+			aihq.RemoveEvent(gameObject);
+		}
 		switch (currentStatus) {
 			case Status.Nothing:
 				SetStatusNothing();
