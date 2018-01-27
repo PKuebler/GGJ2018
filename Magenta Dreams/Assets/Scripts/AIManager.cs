@@ -25,6 +25,7 @@ public class AIManager : MonoBehaviour {
                 if (car.GetComponent<AICharacterControl>().Target == null || car.GetComponent<AICharacterControl>().Target == this.transform)
                 {
                     car.GetComponent<AICharacterControl>().Target = buildingsWithEvents[0].transform;
+                    car.target = buildingsWithEvents[0].transform;
                 }
             }
         }
@@ -42,7 +43,6 @@ public class AIManager : MonoBehaviour {
 
     public void AddCar (GameObject car)
     {
-        Debug.Log(car);
         carList.Add(car.GetComponent<CarTargetSelect>());
     }
 }
