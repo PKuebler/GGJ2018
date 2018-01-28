@@ -4690,6 +4690,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedObject: {fileID: 0}
+  driveClip: {fileID: 8300000, guid: 1f97fa8300802b84784372e2ad81a413, type: 3}
 --- !u!4 &647149924
 Transform:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public class CarManager : MonoBehaviour {
     private GameObject selectedObject;
     private HQ playerHQ;
 	private Timer Timer;
+    public AudioClip driveClip;
 
     // Use this for initialization
     void Start()
@@ -55,6 +56,7 @@ public class CarManager : MonoBehaviour {
                         selectedObject.GetComponent<AICharacterControl>().Target = hit.transform;
                         selectedObject.GetComponent<AICharacterControl>().ReachedTarget = false;
                         selectedObject.GetComponent<CarTargetSelect>().Working = false;
+                        selectedObject.GetComponent<AudioSource>().PlayOneShot(driveClip);
                     }
                 }
                 //2b) Neues Auto selektiert
@@ -67,24 +69,6 @@ public class CarManager : MonoBehaviour {
                 {
                     selectedObject = null;
                 }
-            }
-        }
-    }
-
-    private void OnGUI()
-    {
-        if (selectedObject == null)
-            GUI.Label(new Rect(0, 0, 100, 50), "Aktives Objekt: Kein Objekt gewählt.");
-        else
-        {
-            GUI.Label(new Rect(0, 0, 100, 50), "Aktives Objekt: " + selectedObject.gameObject.name);
-            if (selectedObject.GetComponent<AICharacterControl>().Target != null)
-            {
-                GUI.Label(new Rect(0, 50, 100, 50), "Ziel des Autos: " + selectedObject.GetComponent<AICharacterControl>().Target.name);
-            }
-            else
-            {
-                GUI.Label(new Rect(0, 50, 100, 50), "Ziel des Autos: Kein Ziel gewählt");
             }
         }
     }
