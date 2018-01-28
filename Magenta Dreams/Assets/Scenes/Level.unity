@@ -4734,6 +4734,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c50dfdb7db64742965ba34a166d46b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timerhasstarted: 0
   winningNr: 1
   finishCanvas: {fileID: 1704927247}
   playerHouses: 0
@@ -4752,6 +4753,7 @@ MonoBehaviour:
   aiMaterial: {fileID: 2100000, guid: 201020895d956ae40802756e73630eab, type: 2}
   playerMaterial: {fileID: 2100000, guid: 83b73d6c128cc234492453e725305f9b, type: 2}
   standardMaterial: {fileID: 2100000, guid: 16b77d22d82714f419d924607b67f6f2, type: 2}
+  iconWait: {fileID: 1273229554874226, guid: dd7373b295465f64ea3201ff10c363fe, type: 2}
 --- !u!1 &674403975
 GameObject:
   m_ObjectHideFlags: 0
@@ -7880,7 +7882,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1706096922
 MonoBehaviour:
   m_ObjectHideFlags: 0

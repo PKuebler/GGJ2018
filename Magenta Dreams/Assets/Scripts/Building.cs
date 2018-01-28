@@ -34,6 +34,8 @@ public class Building : MonoBehaviour {
 	private Material playerMaterial;
 	private Material standardMaterial;
 
+	private GameObject waitIcon;
+
 	// state
 	private GameObject icon;
 	public Status currentStatus = Status.Nothing;
@@ -52,6 +54,7 @@ public class Building : MonoBehaviour {
 		aiMaterial = storage.aiMaterial;
 		playerMaterial = storage.playerMaterial;
 		standardMaterial = storage.standardMaterial;
+		waitIcon = storage.iconWait;
 
 		UpdateUI ();
         aihq = GameObject.FindGameObjectWithTag("AIHQ").GetComponent<AIManager>();
@@ -148,6 +151,11 @@ public class Building : MonoBehaviour {
 			}
 		}
 
+		// rotate icon
+		if (icon) {
+			icon.transform.Rotate (new Vector3 (0.0f, 0.8f, 0.0f));
+		}
+
 		// wartet auf nix?
 		if (currentStatus == Status.Nothing || currentStatus == Status.Connection) {
 			return;
@@ -195,12 +203,13 @@ public class Building : MonoBehaviour {
 
 	private void updateIcon() {
 		if (currentStatus != Status.Nothing && currentStatus != Status.Connection && !icon) {
-			icon = GameObject.CreatePrimitive (PrimitiveType.Cylinder);
+			icon = (GameObject)Instantiate (waitIcon, new Vector3(0, 0, 0), Quaternion.identity);
+
 			icon.name = "Icon Waiting!";
 			icon.transform.parent = gameObject.transform;
-			icon.transform.position = gameObject.transform.position - new Vector3 (0, -(gameObject.transform.localScale.y * 2), 0);
-			icon.transform.localScale = new Vector3 (0.5f, 0.5f, 0.5f);
-			icon.GetComponent<Renderer>().material.color = new Color(0,1,0,1);
+			icon.transform.position = gameObject.transform.position - new Vector3 (0, -(icon.transform.localScale.y * 3), 0);
+			icon.transform.localScale = new Vector3 (0.3f, 0.3f, 0.3f);
+//			icon.GetComponent<Renderer>().material.color = new Color(0,1,0,1);
 		} else if (currentStatus == Status.Nothing || currentStatus == Status.Connection) {
 			Destroy (icon);
 		}
