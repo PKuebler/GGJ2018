@@ -30,6 +30,10 @@ public class Building : MonoBehaviour {
 	private float connectionMaxWaitingTime = 40.0f; // Maximale Wartezeit auf Techniker
 	private float errorMaxWaitingTime = 20.0f; // Maximale Wartezeit auf Techniker
 
+	private Material aiMaterial;
+	private Material playerMaterial;
+	private Material standardMaterial;
+
 	// state
 	private GameObject icon;
 	public Status currentStatus = Status.Nothing;
@@ -43,6 +47,12 @@ public class Building : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		MaterialStorage storage = GameObject.FindObjectOfType<MaterialStorage> ().GetComponent<MaterialStorage>();
+
+		aiMaterial = storage.aiMaterial;
+		playerMaterial = storage.playerMaterial;
+		standardMaterial = storage.standardMaterial;
+
 		UpdateUI ();
         aihq = GameObject.FindGameObjectWithTag("AIHQ").GetComponent<AIManager>();
         owner = Owner.NoOne;
@@ -198,12 +208,12 @@ public class Building : MonoBehaviour {
 
 	private void updateColor() {
 		if (currentStatus == Status.Connection || currentStatus == Status.ErrorProgress || currentStatus == Status.ErrorWait) {
-            if (owner == Owner.Player)
-                gameObject.GetComponent<Renderer>().material.color = Color.magenta;
-            else
-                gameObject.GetComponent<Renderer>().material.color = Color.blue;
+			if (owner == Owner.Player)
+				gameObject.GetComponent<Renderer> ().material = playerMaterial;
+			else
+				gameObject.GetComponent<Renderer> ().material = aiMaterial;
         } else {
-			gameObject.GetComponent<Renderer>().material.color = Color.grey;
+			gameObject.GetComponent<Renderer> ().material = standardMaterial;
 		}
 	}
 
