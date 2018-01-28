@@ -10,6 +10,7 @@ public class CarTargetSelect : MonoBehaviour {
     public bool isPlayerCar;
     public Building RecentBuilding { get; set; }
     public bool Working { get; set; }
+    public GameObject cam;
 
 
     void Start ()

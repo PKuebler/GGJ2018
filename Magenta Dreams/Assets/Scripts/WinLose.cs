@@ -120,5 +120,8 @@ public class WinLose : MonoBehaviour {
 		ai.text = aiHouses.ToString () + " Clients";
 		player.text = playerHouses.ToString () + " Clients";
 		status.text = (draw) ? "DRAW" : ((playerWon) ? "YOU WIN" : "YOU LOSE");
+
+        //GameObject.Find("Main Camera").SetActive(false);
+        //GameObject.FindGameObjectWithTag("AIAuto").GetComponent<CarTargetSelect>().cam.SetActive(true);
     }
 }
