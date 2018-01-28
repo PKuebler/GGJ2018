@@ -18,6 +18,10 @@ ModelImporter:
     400008: train_first_card
     400010: train_tracks
     2100000: unnamed
+    2100002: Building_White
+    2100004: Glass
+    2100006: Building_red
+    2100008: Building_gray
     2300000: NurbsPath
     2300002: second_card
     2300004: thrid_card
