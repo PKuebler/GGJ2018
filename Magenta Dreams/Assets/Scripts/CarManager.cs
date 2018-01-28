@@ -73,24 +73,6 @@ public class CarManager : MonoBehaviour {
         }
     }
 
-    private void OnGUI()
-    {
-        if (selectedObject == null)
-            GUI.Label(new Rect(0, 0, 100, 50), "Aktives Objekt: Kein Objekt gewählt.");
-        else
-        {
-            GUI.Label(new Rect(0, 0, 100, 50), "Aktives Objekt: " + selectedObject.gameObject.name);
-            if (selectedObject.GetComponent<AICharacterControl>().Target != null)
-            {
-                GUI.Label(new Rect(0, 50, 100, 50), "Ziel des Autos: " + selectedObject.GetComponent<AICharacterControl>().Target.name);
-            }
-            else
-            {
-                GUI.Label(new Rect(0, 50, 100, 50), "Ziel des Autos: Kein Ziel gewählt");
-            }
-        }
-    }
-
 
     private void SelectCarsByNumbers()
 	{
