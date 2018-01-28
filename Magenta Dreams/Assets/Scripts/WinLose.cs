@@ -71,7 +71,7 @@ public class WinLose : MonoBehaviour {
 
     private bool CheckTimer()
     {
-        if (timer.ElapsedMilliseconds / 1000 > 180)
+        if (timer.ElapsedMilliseconds / 1000 > 600)
         {
             return false;
         }
