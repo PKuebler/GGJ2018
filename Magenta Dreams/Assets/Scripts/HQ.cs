@@ -10,6 +10,7 @@ public class HQ : MonoBehaviour
 
 	public int cars;
 
+	private int maxAICars = 5;
 	private int difficultAI = 2;
 	private int numbersOfCars = 1;
 	private int contractPay;
@@ -52,7 +53,7 @@ public class HQ : MonoBehaviour
 
     public void AIBuyCars()
     {
-		if (numbersOfCars * (carPrice * (GetComponent<AIManager> ().CarList.Count * difficultAI)) <= money) 
+		if (numbersOfCars * (carPrice * (GetComponent<AIManager> ().CarList.Count * difficultAI)) <= money && GetComponent<AIManager> ().CarList.Count <= maxAICars) 
 		{
 			Vector3 postition = new Vector3(this.transform.position.x + (1.0f), this.transform.position.y, this.transform.position.z);
 			GameObject newCar = Instantiate(carPrefab, postition, rotation, this.transform);
