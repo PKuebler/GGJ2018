@@ -7,7 +7,6 @@ using UnityEngine.AI;
 public class CarTargetSelect : MonoBehaviour {
 
     private Transform hq;
-    public ParticleSystem part;
     public bool isPlayerCar;
     public Building RecentBuilding { get; set; }
     public bool Working { get; set; }
@@ -22,6 +21,7 @@ public class CarTargetSelect : MonoBehaviour {
         Working = false;
         RecentBuilding = new Building();
     }
+
 
     void OnTriggerEnter(Collider other)
     {

@@ -186,7 +186,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ee9a7f3bd96d1a4b8e705eee66ffbfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part: {fileID: 0}
   isPlayerCar: 0
 --- !u!136 &136540564876264660
 CapsuleCollider:

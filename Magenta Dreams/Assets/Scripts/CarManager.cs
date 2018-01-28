@@ -19,7 +19,7 @@ public class CarManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        SelectCarsByNumbers();
+        //SelectCarsByNumbers();
         
         //1. Nicht selektiert: wenn Auto: selected = Auto
         //2. Auto selektiert: a) wenn Haus: Ziel / b) wenn neues Auto: neues Auto = selected / c) wenn nichts: selected = nichts
@@ -36,7 +36,6 @@ public class CarManager : MonoBehaviour {
                     if (hit.transform.tag == "Auto")
                     {
                         selectedObject = hit.transform.gameObject;
-                        selectedObject.GetComponent<CarTargetSelect>().part.Play();
                     }
                 }
                 //2. Fall: Auto selektiert
@@ -49,8 +48,6 @@ public class CarManager : MonoBehaviour {
                         //arbeite ich gerade?
                         if (selectedObject.GetComponent<CarTargetSelect>().Working)
                         {
-                            Debug.Log("target: " + selectedObject.GetComponent<CarTargetSelect>().RecentBuilding.name);
-                            Debug.Log("selected: " + selectedObject.name);
                             selectedObject.GetComponent<CarTargetSelect>().RecentBuilding.CheckOut(selectedObject.gameObject);
                         }
                         selectedObject.GetComponent<AICharacterControl>().Target = hit.transform;
@@ -61,13 +58,11 @@ public class CarManager : MonoBehaviour {
                 //2b) Neues Auto selektiert
                 else if (hit.transform.tag == "Auto")
                 {
-                    selectedObject.GetComponent<CarTargetSelect>().part.Stop();
                     selectedObject = hit.transform.gameObject;
                 }
                 //2c) Klick in die Landschaft: Auto wird abgewählt
                 else
                 {
-                    selectedObject.GetComponent<CarTargetSelect>().part.Stop();
                     selectedObject = null;
                 }
             }
@@ -95,17 +90,13 @@ public class CarManager : MonoBehaviour {
 
     private void SelectCarsByNumbers()
     {
-        for (int i = 1; i < playerHQ.carList.Count + 1; i++)
+        if (playerHQ.carList.Count >= 1)
         {
-            if (Input.GetKeyUp(i.ToString()))
+            if (Input.GetButtonUp("1"))
             {
-                if (selectedObject != null)
-                {
-                    selectedObject.GetComponent<CarTargetSelect>().part.Stop();
-                }
-                selectedObject = playerHQ.carList[0];
-                selectedObject.GetComponent<CarTargetSelect>().part.Play();
+
             }
         }
+
     }
 }
