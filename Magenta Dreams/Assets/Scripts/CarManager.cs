@@ -8,11 +8,13 @@ public class CarManager : MonoBehaviour {
     [SerializeField]
     private GameObject selectedObject;
     private HQ playerHQ;
+	private Timer Timer;
 
     // Use this for initialization
     void Start()
     {
         playerHQ = GameObject.FindGameObjectWithTag("HQ").GetComponent<HQ>();
+		Timer = gameObject.GetComponent<Timer> ();
     }
 
 
@@ -90,9 +92,13 @@ public class CarManager : MonoBehaviour {
 
     private void SelectCarsByNumbers()
 	{
-		if (Input.GetKey(KeyCode.Escape))
+		if (Input.GetKeyUp(KeyCode.Escape))
 		{
 			Application.Quit();
+		}
+		if (Input.GetKeyUp(KeyCode.Return))
+		{
+			Timer.StartGame ();
 		}
 		if (Input.GetButtonUp("1"))
 		{

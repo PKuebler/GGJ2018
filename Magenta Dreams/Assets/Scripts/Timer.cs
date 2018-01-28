@@ -6,12 +6,16 @@ public class Timer : MonoBehaviour {
 	private GameObject[] childs;
 	public HQ player_hq;
 	public HQ ai_hq;
+	public GameObject SplashScreen;
+	public GameObject PlayerUI;
 
 	public float moneyTimeLeft = 20.0f;
 	private float timeBetweenMoney = 5.0f;
 
 	public float timeLeft = 30.0f;
 	private float timeBetweenEvents = 5.0f;
+
+	private bool isRun = false;
 		
 	// Use this for initialization
 	void Start () {
@@ -25,6 +29,10 @@ public class Timer : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if (!isRun) {
+			return;
+		}
+
 		timeLeft -= Time.deltaTime;
 		if ( timeLeft < 0 ) {
 			PickBuilding ();
@@ -34,6 +42,10 @@ public class Timer : MonoBehaviour {
 
 	void FixedUpdate()
 	{
+		if (!isRun) {
+			return;
+		}
+
 		moneyTimeLeft -= Time.deltaTime;
 		if (moneyTimeLeft < 0) 
 		{
@@ -64,5 +76,14 @@ public class Timer : MonoBehaviour {
             return;
 		}
 		randomObject.GetComponent<Building>().SetEvent ();
+	}
+
+	// start game
+	public void StartGame() {
+		player_hq.InitStats ();
+		ai_hq.InitStats ();
+		isRun = true;
+		SplashScreen.SetActive (false);
+		PlayerUI.SetActive (true);
 	}
 }
