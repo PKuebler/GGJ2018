@@ -89,7 +89,11 @@ public class CarManager : MonoBehaviour {
 
 
     private void SelectCarsByNumbers()
-    {
+	{
+		if (Input.GetKey(KeyCode.Escape))
+		{
+			Application.Quit();
+		}
 		if (Input.GetButtonUp("1"))
 		{
 			if (playerHQ.carList.Count < 1)
