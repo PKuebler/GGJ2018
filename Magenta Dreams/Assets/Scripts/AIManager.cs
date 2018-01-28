@@ -111,7 +111,7 @@ public class AIManager : MonoBehaviour {
 
     public void AddCar (GameObject car)
     {
-        carList.Add(car.GetComponent<CarTargetSelect>());
+        carList.Add(car.GetComponentInChildren<CarTargetSelect>());
     }
 
     private int MinValue(float[] distances)

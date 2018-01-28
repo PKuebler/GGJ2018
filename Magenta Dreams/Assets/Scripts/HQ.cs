@@ -42,8 +42,9 @@ public class HQ : MonoBehaviour
 		{
 			for(int i = 0; i < numbersOfCars; i++ )
 			{
-				Vector3 postition = new Vector3 (this.transform.position.x + (i + 1.0f), this.transform.position.y, this.transform.position.z);
-				GameObject newCar = Instantiate (carPrefab, postition, rotation, this.transform);
+				Vector3 postition = new Vector3 (this.transform.position.x + (i + 1.0f), this.transform.position.y + 0.3f, this.transform.position.z);
+				GameObject newCar = Instantiate (carPrefab, postition, rotation);
+
 
 				money = money - (carPrice * carList.Count);
 				carList.Add (newCar);
@@ -80,7 +81,8 @@ public class HQ : MonoBehaviour
 		carPrice = 100;
 		contractPay = 5;
 
-		rotation = new Quaternion (0, 0, 0, 0);
+        rotation = new Quaternion();
+
 
 		// Setzen der Autos die bei Spielstart zum HQ gehören
 		carList = new List<GameObject>();
