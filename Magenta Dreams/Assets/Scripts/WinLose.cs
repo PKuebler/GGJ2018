@@ -7,15 +7,19 @@ public class WinLose : MonoBehaviour {
 
     private bool endAfterTimer;
     public bool EndAfterTimer { get; set; }
-
+    [SerializeField]
     private Stopwatch timer;
+    public int GameTimer
+    {
+        get { return (int)timer.ElapsedMilliseconds / 1000; }
+    }
 
     private GameObject[] buildings;
-
+    [SerializeField]
     private int playerHouses;
     public int PlayerHouses
     { get { return playerHouses; } }
-
+    [SerializeField]
     private int aiHouses;
     public int AIHouses
     { get { return aiHouses; } }
@@ -44,8 +48,7 @@ public class WinLose : MonoBehaviour {
                 aiHouses++;
         }
 
-        if (endAfterTimer)
-            CheckTimer();
+        CheckWhoWon();
     }
 
     public void StartGameTimer()
@@ -67,23 +70,4 @@ public class WinLose : MonoBehaviour {
     {
 
     }
-    /*
-    private void OnGUI()
-    {
-        if (selectedObject == null)
-            GUI.Label(new Rect(0, 0, 100, 50), "Aktives Objekt: Kein Objekt gewählt.");
-        else
-        {
-            GUI.Label(new Rect(0, 0, 100, 50), "Aktives Objekt: " + selectedObject.gameObject.name);
-            if (selectedObject.GetComponent<AICharacterControl>().Target != null)
-            {
-                GUI.Label(new Rect(0, 50, 100, 50), "Ziel des Autos: " + selectedObject.GetComponent<AICharacterControl>().Target.name);
-            }
-            else
-            {
-                GUI.Label(new Rect(0, 50, 100, 50), "Ziel des Autos: Kein Ziel gewählt");
-            }
-        }
-    }
-    */
 }
