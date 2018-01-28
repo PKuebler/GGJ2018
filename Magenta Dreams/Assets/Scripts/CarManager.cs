@@ -19,7 +19,7 @@ public class CarManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        //SelectCarsByNumbers();
+        SelectCarsByNumbers();
         
         //1. Nicht selektiert: wenn Auto: selected = Auto
         //2. Auto selektiert: a) wenn Haus: Ziel / b) wenn neues Auto: neues Auto = selected / c) wenn nichts: selected = nichts
@@ -90,13 +90,60 @@ public class CarManager : MonoBehaviour {
 
     private void SelectCarsByNumbers()
     {
-        if (playerHQ.carList.Count >= 1)
-        {
-            if (Input.GetButtonUp("1"))
-            {
-
-            }
-        }
+		if (Input.GetButtonUp("1"))
+		{
+			if (playerHQ.carList.Count < 1)
+				return;
+			selectedObject = playerHQ.carList [0];
+		}
+		if (Input.GetButtonUp("2"))
+		{
+			if (playerHQ.carList.Count < 2)
+				return;
+			selectedObject = playerHQ.carList [1];
+		}
+		if (Input.GetButtonUp("3"))
+		{
+			if (playerHQ.carList.Count < 3)
+				return;
+			selectedObject = playerHQ.carList [2];
+		}
+		if (Input.GetButtonUp("4"))
+		{
+			if (playerHQ.carList.Count < 4)
+				return;
+			selectedObject = playerHQ.carList [3];
+		}
+		if (Input.GetButtonUp("5"))
+		{
+			if (playerHQ.carList.Count < 5)
+				return;
+			selectedObject = playerHQ.carList [4];
+		}
+		if (Input.GetButtonUp("6"))
+		{
+			if (playerHQ.carList.Count < 6)
+				return;
+			selectedObject = playerHQ.carList [5];
+		}
+		if (Input.GetButtonUp("7"))
+		{
+			if (playerHQ.carList.Count < 7)
+				return;
+			selectedObject = playerHQ.carList [6];
+		}
+		if (Input.GetButtonUp("8"))
+		{
+			if (playerHQ.carList.Count < 8)
+				return;
+			selectedObject = playerHQ.carList [7];
+		}
+		if (Input.GetButtonUp("9"))
+		{
+			if (playerHQ.carList.Count < 9)
+				return;
+			selectedObject = playerHQ.carList [8];
+		}
 
     }
 }
