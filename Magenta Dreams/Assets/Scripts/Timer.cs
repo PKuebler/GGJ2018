@@ -13,7 +13,7 @@ public class Timer : MonoBehaviour {
 	private float timeBetweenMoney = 5.0f;
 
 	public float timeLeft = 30.0f;
-	private float timeBetweenEvents = 5.0f;
+	private float timeBetweenEvents = 15.0f;
 
 	private bool isRun = false;
 		
@@ -34,6 +34,7 @@ public class Timer : MonoBehaviour {
 		}
 
 		timeLeft -= Time.deltaTime;
+		print (Time.deltaTime.ToString());
 		if ( timeLeft < 0 ) {
 			PickBuilding ();
 			timeLeft = timeBetweenEvents;
