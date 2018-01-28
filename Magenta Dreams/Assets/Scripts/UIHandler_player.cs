@@ -25,7 +25,7 @@ public class UIHandler_player : MonoBehaviour {
 		moneyText =  hq_player.GetComponent<HQ> ().Money.ToString() + " $";
 		moneyTextField.text = moneyText;
 
-		buildingsText =  winLose.PlayerHouses.ToString() + "/10 Clients";
+		buildingsText =  winLose.PlayerHouses.ToString() + "/8 Clients";
 		buildingsTextField.text = buildingsText;
 	}
 }

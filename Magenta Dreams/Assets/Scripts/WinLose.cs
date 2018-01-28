@@ -6,9 +6,12 @@ using UnityEngine.UI;
 
 public class WinLose : MonoBehaviour {
 
+    private bool gameEnded;
+
     public bool timerhasstarted;
     public int winningNr;
     public GameObject finishCanvas;
+    public GameObject canvasPlayer;
 
     private bool endAfterTimer;
     public bool EndAfterTimer { get; set; }
@@ -34,6 +37,7 @@ public class WinLose : MonoBehaviour {
         buildings = GameObject.FindGameObjectsWithTag("Haus");
         timer = new Stopwatch();
         timerhasstarted = false;
+        gameEnded = false;
     }
 
     // Update is called once per frame
@@ -54,7 +58,8 @@ public class WinLose : MonoBehaviour {
                 aiHouses++;
         }
 
-        CheckWhoWon();
+        if (!gameEnded)
+            CheckWhoWon();
     }
 
     public void StartGameTimer()
@@ -103,6 +108,9 @@ public class WinLose : MonoBehaviour {
 
     private void Won(bool playerWon, bool draw)
     {
+        gameEnded = true;
+
+        canvasPlayer.SetActive(false);
         finishCanvas.SetActive(true);
 
         Text ai = GameObject.Find ("AI Count").GetComponent<Text>();
