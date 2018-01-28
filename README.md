@@ -1,6 +1,8 @@
 # MAGENTA DREAMS
 ## This service is a good service
 
+GlobalGameJam 2018 as InnoGames Hamburg.
+
 ![TitleScreen](https://raw.githubusercontent.com/pkuebler/ggj2018/dev2/feature.png)
 
 ## Description
