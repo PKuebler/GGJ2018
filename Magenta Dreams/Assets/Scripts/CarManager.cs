@@ -10,18 +10,31 @@ public class CarManager : MonoBehaviour {
     private HQ playerHQ;
 	private Timer Timer;
     public AudioClip driveClip;
+	private bool isMagenta = true;
+	private float blinkTimer = 0;
+	private MaterialStorage storage;
 
     // Use this for initialization
     void Start()
     {
         playerHQ = GameObject.FindGameObjectWithTag("HQ").GetComponent<HQ>();
 		Timer = gameObject.GetComponent<Timer> ();
+		storage = gameObject.GetComponent<MaterialStorage> ();
     }
 
 
     // Update is called once per frame
     void Update()
     {
+		if (selectedObject != null) {
+			if (blinkTimer > 0.5f) {
+				selectedObject.GetComponent<Renderer> ().material = (isMagenta) ? storage.standardMaterial : storage.playerMaterial;
+				isMagenta = !isMagenta;
+				blinkTimer = 0;
+			}
+			blinkTimer += Time.deltaTime;
+		}
+
         SelectCarsByNumbers();
         
         //1. Nicht selektiert: wenn Auto: selected = Auto
@@ -62,11 +75,17 @@ public class CarManager : MonoBehaviour {
                 //2b) Neues Auto selektiert
                 else if (hit.transform.tag == "Auto")
                 {
+					if (selectedObject) {
+						selectedObject.GetComponent<Renderer> ().material = storage.playerMaterial;
+					}
                     selectedObject = hit.transform.gameObject;
                 }
                 //2c) Klick in die Landschaft: Auto wird abgewählt
                 else
                 {
+					if (selectedObject) {
+						selectedObject.GetComponent<Renderer> ().material = storage.playerMaterial;
+					}
                     selectedObject = null;
                 }
             }
