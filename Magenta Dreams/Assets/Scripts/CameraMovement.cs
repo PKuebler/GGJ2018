@@ -41,6 +41,16 @@ public class CameraMovement : MonoBehaviour {
         {
             transform.Translate(Vector3.back * Time.deltaTime * moveSpeed, Space.Self);
         }
+        if (Input.GetKey("y"))
+        {
+            if (transform.position.y > 3.0f)
+                transform.Translate(Vector3.down * Time.deltaTime * moveSpeed, Space.Self);
+        }
+        if (Input.GetKey("x"))
+        {
+            if (transform.position.y < 13.0f)
+                transform.Translate(Vector3.up * Time.deltaTime * moveSpeed, Space.Self);
+        }
 
         // Get the left mouse button
         if (Input.GetMouseButtonDown(1))
