@@ -35,6 +35,7 @@ public class Building : MonoBehaviour {
 	private Material standardMaterial;
 
 	private GameObject waitIcon;
+	private GameObject iconError;
 
 	// state
 	private GameObject icon;
@@ -55,6 +56,7 @@ public class Building : MonoBehaviour {
 		playerMaterial = storage.playerMaterial;
 		standardMaterial = storage.standardMaterial;
 		waitIcon = storage.iconWait;
+		iconError = storage.iconError;
 
 		UpdateUI ();
         aihq = GameObject.FindGameObjectWithTag("AIHQ").GetComponent<AIManager>();
@@ -153,7 +155,7 @@ public class Building : MonoBehaviour {
 
 		// rotate icon
 		if (icon) {
-			icon.transform.Rotate (new Vector3 (0.0f, 0.8f, 0.0f));
+			icon.transform.Rotate (new Vector3 (0.0f, 1.0f, 0.0f));
 		}
 
 		// wartet auf nix?
@@ -203,7 +205,7 @@ public class Building : MonoBehaviour {
 
 	private void updateIcon() {
 		if (currentStatus != Status.Nothing && currentStatus != Status.Connection && !icon) {
-			icon = (GameObject)Instantiate (waitIcon, new Vector3(0, 0, 0), Quaternion.identity);
+			icon = (GameObject)Instantiate (((currentStatus == Status.ConnectionWait || currentStatus == Status.ConnectionProgress) ? waitIcon : iconError), new Vector3(0, 0, 0), Quaternion.identity);
 
 			icon.name = "Icon Waiting!";
 			icon.transform.parent = gameObject.transform;
