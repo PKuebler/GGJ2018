@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WinLose : MonoBehaviour {
 
@@ -102,6 +103,12 @@ public class WinLose : MonoBehaviour {
 
     private void Won(bool playerWon, bool draw)
     {
+		Text ai = GameObject.Find ("AI Count").GetComponent<Text>();
+		Text player = GameObject.Find ("Player Count").GetComponent<Text>();
+
+		ai.text = aiHouses.ToString () + " Clients";
+		player.text = playerHouses.ToString () + " Clients";
+
         finishCanvas.SetActive(true);
     }
 }
