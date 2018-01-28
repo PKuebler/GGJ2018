@@ -4733,6 +4733,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c50dfdb7db64742965ba34a166d46b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  winningNr: 1
+  finishCanvas: {fileID: 1704927247}
   playerHouses: 0
   aiHouses: 0
 --- !u!1 &674403975

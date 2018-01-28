@@ -104,6 +104,8 @@ public class HQ : MonoBehaviour
 			GameObject newCar = Instantiate (carPrefab, postition, rotation, this.transform);
 			carList.Add (newCar);
 		}
+
+        GameObject.Find("GameManager").GetComponent<WinLose>().StartGameTimer();
 	}
 	#endregion
 }

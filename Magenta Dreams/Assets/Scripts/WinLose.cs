@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class WinLose : MonoBehaviour {
 
+    public bool timerhasstarted;
+    public int winningNr;
+    public GameObject finishCanvas;
+
     private bool endAfterTimer;
     public bool EndAfterTimer { get; set; }
     [SerializeField]
@@ -28,6 +32,7 @@ public class WinLose : MonoBehaviour {
     void Start() {
         buildings = GameObject.FindGameObjectsWithTag("Haus");
         timer = new Stopwatch();
+        timerhasstarted = false;
     }
 
     // Update is called once per frame
@@ -54,20 +59,49 @@ public class WinLose : MonoBehaviour {
     public void StartGameTimer()
     {
         timer.Start();
+        timerhasstarted = true;
     }
 
 
-    private void CheckTimer()
+    private bool CheckTimer()
     {
         if (timer.ElapsedMilliseconds / 1000 > 180)
         {
-            CheckWhoWon();
+            return false;
         }
+        else
+            return true;
     }
 
 
     private void CheckWhoWon()
     {
+        if (playerHouses >= winningNr)
+        {
+            Won(true, false);
+        }
+        else if (aiHouses >= winningNr)
+        {
+            Won(false, false);
+        }
 
+        if (timerhasstarted && !CheckTimer())
+        {
+            if (playerHouses > aiHouses)
+            {
+                Won(true, false);
+            }
+            else if (playerHouses < aiHouses)
+            {
+                Won(false, false);
+            }
+            else
+                Won(false, true);
+        }
+    }
+
+    private void Won(bool playerWon, bool draw)
+    {
+        finishCanvas.SetActive(true);
     }
 }
