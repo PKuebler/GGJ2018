@@ -15,15 +15,11 @@ public class UIHandler_player : MonoBehaviour {
 	void Start () {
 		hq_player = GameObject.FindGameObjectWithTag ("HQ");
 		moneyTextField = GameObject.Find ("Money - Text").GetComponent<Text>();
-		carTextField = GameObject.Find ("Auto Anzahl Test").GetComponent<Text> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		moneyText =  hq_player.GetComponent<HQ> ().Money.ToString();
+		moneyText =  hq_player.GetComponent<HQ> ().Money.ToString() + " $";
 		moneyTextField.text = moneyText;
-
-		carText = hq_player.GetComponent<HQ> ().cars.ToString ();
-		carTextField.text = carText;
 	}
 }
