@@ -16,6 +16,6 @@ Click on your magenta car to select it. Then click on a house with a contraact o
 
 WASD to move the camera, XY to zoom up/down/ right mouse button to pan.
 
-![TitleScreen](https://raw.githubusercontent.com/pkuebler/ggj2018/dev2/docs/feature2.png)
+![TitleScreen](https://raw.githubusercontent.com/pkuebler/ggj2018/dev2/docs/feature2.jpg)
 
 ![TitleScreen](https://raw.githubusercontent.com/pkuebler/ggj2018/dev2/docs/feature3.png)
