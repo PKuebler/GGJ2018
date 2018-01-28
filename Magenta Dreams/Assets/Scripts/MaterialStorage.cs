@@ -8,6 +8,7 @@ public class MaterialStorage : MonoBehaviour {
 	public Material playerMaterial;
 	public Material standardMaterial;
 	public GameObject iconWait;
+	public GameObject iconError;
 
 	// Use this for initialization
 	void Start () {
