@@ -109,7 +109,7 @@ public class WinLose : MonoBehaviour {
 
 		ai.text = aiHouses.ToString () + " Clients";
 		player.text = playerHouses.ToString () + " Clients";
-		status.text = (playerWon) ? "WIN" : "LOSE";
+		status.text = (draw) ? "DRAW" : ((playerWon) ? "WIN" : "LOSE");
 
         finishCanvas.SetActive(true);
     }
