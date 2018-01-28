@@ -26,7 +26,6 @@ public class HQ : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		InitStats ();
 	}
 	
 	// Update is called once per frame
@@ -42,9 +41,8 @@ public class HQ : MonoBehaviour
 		{
 			for(int i = 0; i < numbersOfCars; i++ )
 			{
-				Vector3 postition = new Vector3 (this.transform.position.x + (i + 1.0f), this.transform.position.y + 0.3f, this.transform.position.z);
-				GameObject newCar = Instantiate (carPrefab, postition, rotation);
-
+				Vector3 postition = new Vector3 (this.transform.position.x + (i + 1.0f), this.transform.position.y, this.transform.position.z);
+				GameObject newCar = Instantiate (carPrefab, postition, rotation, this.transform);
 
 				money = money - (carPrice * carList.Count);
 				carList.Add (newCar);
@@ -73,16 +71,16 @@ public class HQ : MonoBehaviour
 		money += Mathf.RoundToInt(newMoney);
 	}
 		
+	// call from timer
 	#region Erstellen der HQ Werte und erstes Auto
-	void InitStats()
+	public void InitStats()
 	{
 		// HQ Stats
 		money = 100;
 		carPrice = 100;
 		contractPay = 5;
 
-        rotation = new Quaternion();
-
+		rotation = new Quaternion (0, 0, 0, 0);
 
 		// Setzen der Autos die bei Spielstart zum HQ gehören
 		carList = new List<GameObject>();

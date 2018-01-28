@@ -4743,6 +4743,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player_hq: {fileID: 0}
   ai_hq: {fileID: 0}
+  SplashScreen: {fileID: 779248496}
+  PlayerUI: {fileID: 1706096921}
   moneyTimeLeft: 40
   timeLeft: 30
 --- !u!1 &674403975
@@ -5559,6 +5561,10 @@ Prefab:
         type: 2}
       propertyPath: m_SizeDelta.x
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 1297429897805040, guid: 6181a31a5a5be3f4484569fd02cd0b0f, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6181a31a5a5be3f4484569fd02cd0b0f, type: 2}
@@ -7169,6 +7175,11 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1694947018}
   m_Mesh: {fileID: 4300036, guid: 65aaa97f8ef574c1eab1d9079ec0bb8f, type: 3}
+--- !u!1 &1706096921 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1115360964430682, guid: 73e6b35691ab6df4bb45f6c13cda9e17,
+    type: 2}
+  m_PrefabInternal: {fileID: 1786780663}
 --- !u!1001 &1716475478
 Prefab:
   m_ObjectHideFlags: 0
@@ -7595,6 +7606,10 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BuyCars
+      objectReference: {fileID: 0}
+    - target: {fileID: 1115360964430682, guid: 73e6b35691ab6df4bb45f6c13cda9e17, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 73e6b35691ab6df4bb45f6c13cda9e17, type: 2}
