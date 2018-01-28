@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class WinLose : MonoBehaviour {
 
     private bool endAfterTimer;
     public bool EndAfterTimer { get; set; }
+
+    private Stopwatch timer;
+
     private GameObject[] buildings;
 
     private int playerHouses;
@@ -17,14 +21,15 @@ public class WinLose : MonoBehaviour {
     { get { return aiHouses; } }
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         buildings = GameObject.FindGameObjectsWithTag("Haus");
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        timer = new Stopwatch();
+    }
+
+    // Update is called once per frame
+    void Update() {
         UpdateHouseCount();
-	}
+    }
 
     private void UpdateHouseCount()
     {
@@ -38,5 +43,28 @@ public class WinLose : MonoBehaviour {
             if (house.GetComponent<Building>().owner == Building.Owner.AI)
                 aiHouses++;
         }
+
+        if (endAfterTimer)
+            CheckTimer();
+    }
+
+    public void StartGameTimer()
+    {
+        timer.Start();
+    }
+
+
+    private void CheckTimer()
+    {
+        if (timer.ElapsedMilliseconds / 1000 > 180)
+        {
+            CheckWhoWon();
+        }
+    }
+
+
+    private void CheckWhoWon()
+    {
+
     }
 }

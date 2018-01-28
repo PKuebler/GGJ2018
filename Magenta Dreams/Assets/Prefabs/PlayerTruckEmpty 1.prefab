@@ -33,7 +33,7 @@ GameObject:
   - component: {fileID: 114593289637516704}
   m_Layer: 8
   m_Name: Truck-90
-  m_TagString: Auto
+  m_TagString: AIAuto
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
