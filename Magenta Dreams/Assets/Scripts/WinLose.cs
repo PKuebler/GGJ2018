@@ -105,9 +105,11 @@ public class WinLose : MonoBehaviour {
     {
 		Text ai = GameObject.Find ("AI Count").GetComponent<Text>();
 		Text player = GameObject.Find ("Player Count").GetComponent<Text>();
+		Text status = GameObject.Find ("Gewonnen").GetComponent<Text> ();
 
 		ai.text = aiHouses.ToString () + " Clients";
 		player.text = playerHouses.ToString () + " Clients";
+		status.text = (playerWon) ? "WIN" : "LOSE";
 
         finishCanvas.SetActive(true);
     }
