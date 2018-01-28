@@ -1013,19 +1013,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 6005310c40057494eadf232ef38f6356, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.6348719
+      value: 0.63487196
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 6005310c40057494eadf232ef38f6356, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.31134817
+      value: 0.3113482
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 6005310c40057494eadf232ef38f6356, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.63487184
+      value: 0.6348719
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 6005310c40057494eadf232ef38f6356, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.31134823
+      value: -0.31134826
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 6005310c40057494eadf232ef38f6356, type: 3}
       propertyPath: m_Controller
@@ -4671,6 +4671,7 @@ GameObject:
   - component: {fileID: 647149924}
   - component: {fileID: 647149923}
   - component: {fileID: 647149925}
+  - component: {fileID: 647149926}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -4721,6 +4722,19 @@ MonoBehaviour:
   PlayerUI: {fileID: 1706096921}
   moneyTimeLeft: 40
   timeLeft: 30
+--- !u!114 &647149926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 647149922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94c50dfdb7db64742965ba34a166d46b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHouses: 0
+  aiHouses: 0
 --- !u!1 &674403975
 GameObject:
   m_ObjectHideFlags: 0
@@ -7704,7 +7718,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 83b73d6c128cc234492453e725305f9b, type: 2}
+  - {fileID: 2100000, guid: 201020895d956ae40802756e73630eab, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
